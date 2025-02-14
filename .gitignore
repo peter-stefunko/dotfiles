@@ -19,3 +19,4 @@
 /home/peter/.config/synth-shell/*
 !/home/peter/.config/synth-shell/synth-shell-prompt.config
 !/home/peter/.config/synth-shell/synth-shell-prompt.root.config
+!/home/peter/.config/synth-shell/.gitkeep
