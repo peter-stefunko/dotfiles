@@ -1,0 +1,6 @@
+/home/peter/.kodi/userdata/*
+!/home/peter/.kodi/userdata/guisettings.xml
+!/home/peter/.kodi/userdata/profiles.xml
+!/home/peter/.kodi/userdata/sources.xml
+!/home/peter/.kodi/userdata/RssFeeds.xml
+!/home/peter/.kodi/userdata/.gitkeep
