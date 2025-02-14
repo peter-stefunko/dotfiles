@@ -4,3 +4,9 @@
 !/home/peter/.kodi/userdata/sources.xml
 !/home/peter/.kodi/userdata/RssFeeds.xml
 !/home/peter/.kodi/userdata/.gitkeep
+
+/home/peter/.spicetify/*
+!/home/peter/.spicetify/CustomApps
+!/home/peter/.spicetify/Extensions
+!/home/peter/.spicetify/Themes
+!/home/peter/.spicetify/jsHelper
