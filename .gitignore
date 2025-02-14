@@ -10,3 +10,8 @@
 !/home/peter/.spicetify/Extensions
 !/home/peter/.spicetify/Themes
 !/home/peter/.spicetify/jsHelper
+!/home/peter/.spicetify/.gitkeep
+
+/home/peter/.vscode/*
+!/home/peter/.vscode/extensions/
+!/home/peter/.vscode/extensions/.gitkeep
