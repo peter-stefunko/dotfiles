@@ -125,3 +125,4 @@ fi
 export PATH=$PATH:/home/peter/.spicetify
 
 . "$HOME/.cargo/env"
+alias dotfiles='/usr/bin/git --git-dir=/home/peter/.dotfiles --work-tree=/home/peter'
