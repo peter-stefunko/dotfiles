@@ -1,18 +1,21 @@
-/home/peter/.kodi/userdata/*
-!/home/peter/.kodi/userdata/guisettings.xml
-!/home/peter/.kodi/userdata/profiles.xml
-!/home/peter/.kodi/userdata/sources.xml
-!/home/peter/.kodi/userdata/RssFeeds.xml
-!/home/peter/.kodi/userdata/.gitkeep
+$HOME/.kodi/userdata/*
+!$HOME/.kodi/userdata/guisettings.xml
+!$HOME/.kodi/userdata/profiles.xml
+!$HOME/.kodi/userdata/sources.xml
+!$HOME/.kodi/userdata/RssFeeds.xml
+!$HOME/.kodi/userdata/.gitkeep
 
-/home/peter/.spicetify/*
-!/home/peter/.spicetify/CustomApps
-!/home/peter/.spicetify/Extensions
-!/home/peter/.spicetify/Themes
-!/home/peter/.spicetify/jsHelper
-!/home/peter/.spicetify/.gitkeep
+$HOME/.spicetify/*
+!$HOME/.spicetify/CustomApps
+!$HOME/.spicetify/Extensions
+!$HOME/.spicetify/Themes
+!$HOME/.spicetify/jsHelper
+!$HOME/.spicetify/.gitkeep
 
-/home/peter/.config/synth-shell/*
-!/home/peter/.config/synth-shell/synth-shell-prompt.config
-!/home/peter/.config/synth-shell/synth-shell-prompt.root.config
-!/home/peter/.config/synth-shell/.gitkeep
+$HOME/.config/synth-shell/*
+!$HOME/.config/synth-shell/synth-shell-prompt.config
+!$HOME/.config/synth-shell/synth-shell-prompt.root.config
+!$HOME/.config/synth-shell/.gitkeep
+
+/usr/local/bin/*
+!/usr/local/bin/tor-arti.sh
