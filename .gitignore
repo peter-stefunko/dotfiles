@@ -15,3 +15,7 @@
 /home/peter/.vscode/*
 !/home/peter/.vscode/extensions/
 !/home/peter/.vscode/extensions/.gitkeep
+
+/home/peter/.config/synth-shell/*
+!/home/peter/.config/synth-shell/synth-shell-prompt.config
+!/home/peter/.config/synth-shell/synth-shell-prompt.root.config
