@@ -126,3 +126,14 @@ export PATH=$PATH:/home/peter/.spicetify
 
 . "$HOME/.cargo/env"
 alias dotfiles='/usr/bin/git --git-dir=/home/peter/.dotfiles --work-tree=/home/peter'
+alias feh='feh -F'
+export DOCKER_HOST=unix:///var/run/docker.sock
+
+# Created by `pipx` on 2025-02-28 16:27:19
+export PATH="$PATH:/home/peter/.local/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export XDG_CACHE_HOME="$HOME/.cache"
+export QT_LOGGING_RULES="kwin_*.debug=true"

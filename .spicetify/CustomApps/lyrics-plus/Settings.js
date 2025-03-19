@@ -51,7 +51,7 @@ const CacheButton = () => {
 	}
 
 	const [count, setCount] = useState(Object.keys(lyrics).length);
-	const text = count ? "Clear cached lyrics" : "No cached lyrics";
+	const text = count ? "Clear all cached lyrics" : "No cached lyrics";
 
 	return react.createElement(
 		"button",
@@ -106,8 +106,42 @@ const RefreshTokenButton = ({ setTokenCallback }) => {
 	);
 };
 
+const ConfigButton = ({ name, text, onChange = () => {} }) => {
+	return react.createElement(
+		"div",
+		{
+			className: "setting-row",
+		},
+		react.createElement(
+			"label",
+			{
+				className: "col description",
+			},
+			name
+		),
+		react.createElement(
+			"div",
+			{
+				className: "col action",
+			},
+			react.createElement(
+				"button",
+				{
+					className: "btn",
+					onClick: onChange,
+				},
+				text
+			)
+		)
+	);
+};
+
 const ConfigSlider = ({ name, defaultValue, onChange = () => {} }) => {
 	const [active, setActive] = useState(defaultValue);
+
+	useEffect(() => {
+		setActive(defaultValue);
+	}, [defaultValue]);
 
 	const toggleState = useCallback(() => {
 		const state = !active;
@@ -512,6 +546,7 @@ const OptionList = ({ type, items, onChange }) => {
 		);
 	});
 };
+
 const languageCodes =
 	"none,en,af,ar,bg,bn,ca,zh,cs,da,de,el,es,et,fa,fi,fr,gu,he,hi,hr,hu,id,is,it,ja,jv,kn,ko,lt,lv,ml,mr,ms,nl,no,pl,pt,ro,ru,sk,sl,sr,su,sv,ta,te,th,tr,uk,ur,vi,zu".split(
 		","
@@ -522,9 +557,6 @@ const languageOptions = languageCodes.reduce((acc, code) => {
 	acc[code] = code === "none" ? "None" : displayNames.of(code);
 	return acc;
 }, {});
-
-const savedLanguage = localStorage.getItem(`${APP_NAME}:visual:musixmatch-translation-language`) || "none";
-CONFIG.visual["musixmatch-translation-language"] = savedLanguage;
 
 function openConfig() {
 	const configContainer = react.createElement(
@@ -645,17 +677,36 @@ function openConfig() {
 				},
 				{
 					desc: "Musixmatch Translation Language.",
-					info: "Choose the language you want to translate the lyrics to. Changes will take effect after the next track.",
+					info: "Choose the language you want to translate the lyrics to. When the language is changed, the lyrics reloads.",
 					key: "musixmatch-translation-language",
 					type: ConfigSelection,
 					options: languageOptions,
-					defaultValue: savedLanguage,
+				},
+				{
+					desc: "Clear Memory Cache",
+					info: "Loaded lyrics are cached in memory for faster reloading. Press this button to clear the cached lyrics from memory without restarting Spotify.",
+					key: "clear-memore-cache",
+					text: "Clear memory cache",
+					type: ConfigButton,
+					onChange: () => {
+						reloadLyrics?.();
+					},
 				},
 			],
 			onChange: (name, value) => {
 				CONFIG.visual[name] = value;
 				localStorage.setItem(`${APP_NAME}:visual:${name}`, value);
-				lyricContainerUpdate?.();
+
+				// Reload Lyrics if translation language is changed
+				if (name === "musixmatch-translation-language") {
+					if (value === "none") {
+						CONFIG.visual["translate:translated-lyrics-source"] = "none";
+						localStorage.setItem(`${APP_NAME}:visual:translate:translated-lyrics-source`, "none");
+					}
+					reloadLyrics?.();
+				} else {
+					lyricContainerUpdate?.();
+				}
 
 				const configChange = new CustomEvent("lyrics-plus", {
 					detail: {
@@ -673,15 +724,17 @@ function openConfig() {
 			onListChange: (list) => {
 				CONFIG.providersOrder = list;
 				localStorage.setItem(`${APP_NAME}:services-order`, JSON.stringify(list));
+				reloadLyrics?.();
 			},
 			onToggle: (name, value) => {
 				CONFIG.providers[name].on = value;
 				localStorage.setItem(`${APP_NAME}:provider:${name}:on`, value);
-				lyricContainerUpdate?.();
+				reloadLyrics?.();
 			},
 			onTokenChange: (name, value) => {
 				CONFIG.providers[name].token = value;
 				localStorage.setItem(`${APP_NAME}:provider:${name}:token`, value);
+				reloadLyrics?.();
 			},
 		}),
 		react.createElement("h2", null, "CORS Proxy Template"),
