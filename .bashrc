@@ -114,15 +114,11 @@ fi
 
 [ -f "/home/peter/.ghcup/env" ] && source "/home/peter/.ghcup/env" # ghcup-env
 
-export PATH=/home/peter/clion-2023.3.4/bin:$PATH
-
 ##-----------------------------------------------------
 ## synth-shell-prompt.sh
 if [ -f /home/peter/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
         source /home/peter/.config/synth-shell/synth-shell-prompt.sh
 fi
-
-export PATH=$PATH:/home/peter/.spicetify
 
 . "$HOME/.cargo/env"
 alias dotfiles='/usr/bin/git --git-dir=/home/peter/.dotfiles --work-tree=/home/peter'
