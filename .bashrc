@@ -122,7 +122,10 @@ fi
 
 . "$HOME/.cargo/env"
 alias dotfiles='/usr/bin/git --git-dir=/home/peter/.dotfiles --work-tree=/home/peter'
+
 alias feh='feh -F'
+alias pqiv='pqiv -f --auto-montage-mode'
+
 export DOCKER_HOST=unix:///var/run/docker.sock
 
 # Created by `pipx` on 2025-02-28 16:27:19
@@ -133,3 +136,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export XDG_CACHE_HOME="$HOME/.cache"
 export QT_LOGGING_RULES="kwin_*.debug=true"
+
