@@ -137,3 +137,4 @@ export NVM_DIR="$HOME/.nvm"
 export XDG_CACHE_HOME="$HOME/.cache"
 export QT_LOGGING_RULES="kwin_*.debug=true"
 
+export PATH=$PATH:/usr/sbin
