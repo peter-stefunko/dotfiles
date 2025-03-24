@@ -1,5 +1,6 @@
 #!/bin/bash
 
-DATA_DIR=$HOME/.config/polybar/data
+data_dir="$HOME/.config/polybar/data"
 
-rm $DATA_DIR/*
+#rm "$data_dir/*" !("$data_dir/right_entries.txt")
+find "$data_dir" -type f ! -name "right_entries.txt" -delete

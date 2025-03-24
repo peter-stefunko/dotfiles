@@ -1,15 +1,19 @@
 #!/bin/bash
 
+idx=8
 data="$HOME/.config/polybar/data"
-right_file="$data/right.txt"
+poly_right="$data/right.txt"
 
-if [[ ! -f $right_file ]]; then
-        touch $right_file
-        printf '0;0\n%.0s' {1..9} > $right_file
+entries=$(cat "$data/right_entries.txt")
+
+if [[ ! -f $poly_right ]]; then
+        touch $poly_right
+        printf '0;0\n%.0s' $(seq 1 "$entries") > "$poly_right"
 fi
 
-device_name=$(bluetoothctl devices Connected | cut -d' ' -f3-)
 icon_count=0
+
+device_name=$(bluetoothctl devices Connected | cut -d' ' -f3-)
 
 if bluetoothctl show | grep -q "Powered: yes"; then
 	icon_count=$(($icon_count + 1))
@@ -19,11 +23,14 @@ if bluetoothctl show | grep -q "Powered: yes"; then
 	else
 		output="󰂯"
 	fi
-else
-	output=""
 fi
 
-len=$((${#output} + 3 - $icon_count))
-sed -i "2s/.*/$icon_count;$len/" "$right_file"
+if [[ -n $output ]]; then
+	len=$((${#output} + 3 - $icon_count))
+else
+	len=0
+fi
+
+sed -i "${idx}s/.*/$icon_count;$len/" "$poly_right"
 
 echo "$output"

@@ -1,21 +1,21 @@
 #!/bin/bash
 
-DATA="$HOME/.config/polybar/data"
-RIGHT_FILE="$DATA/right.txt"
+data="$HOME/.config/polybar/data"
+poly_right="$data/right.txt"
 
-if [[ ! -f $RIGHT_FILE ]]; then
-        touch $RIGHT_FILE
-        printf '0;0\n%.0s' {1..9} > $RIGHT_FILE
+if [[ ! -f $poly_right ]]; then
+        touch $poly_right
+        printf '0;0\n%.0s' {1..9} > $poly_right
 fi
 
-STATUS=$(playerctl -p spotify status 2>/dev/null)
+status=$(playerctl -p spotify status 2>/dev/null)
 
 icon_count=0
 
-if [ "$STATUS" == "Playing" ]; then
-	STATUS_ICON=
-elif [ "$STATUS" == "Paused" ]; then
-	STATUS_ICON=
+if [ "$status" == "Playing" ]; then
+	status_icon=
+elif [ "$status" == "Paused" ]; then
+	status_icon=
 else
 	echo ""
 	exit
@@ -23,79 +23,77 @@ fi
 
 icon_count=$(($icon_count + 1))
 
-TITLE=$(playerctl metadata title)
-ARTIST=$(playerctl metadata artist)
-ALBUM=$(playerctl metadata album)
-# POSITION=$(playerctl position)
-# DURATION=$(playerctl metadata mpris:length)
-#VOLUME=$(playerctl volume)
-SHUFFLE=$(playerctl shuffle)
-REPEAT=$(playerctl loop)
+title=$(playerctl metadata title)
+artist=$(playerctl metadata artist)
+album=$(playerctl metadata album)
+shuffle=$(playerctl shuffle)
+repeat=$(playerctl loop)
 
-# DURATION=$((DURATION / 1000000))
-# DURATION_FORMATTED=$(printf "%02d:%02d" $((DURATION / 60)) $((DURATION % 60)))
-
-#VOLUME=$(printf "%.0f" $(echo "$VOLUME * 100" | bc))
-
-# POSITION=$(printf "%.0f" $POSITION)
-# POSITION=$(printf "%02d:%02d" $((POSITION / 60)) $((POSITION % 60)))
-
-space=$(printf '\u00A0\u00A0')
-
-if [ "$SHUFFLE" = "On" ]; then
-	SHUFFLE_ICON=" "
+if [ "$shuffle" = "On" ]; then
+	shuffle_icon=" "
 	icon_count=$(($icon_count + 1))
 else
-	SHUFFLE_ICON=""
+	shuffle_icon=""
 fi
 
-case "$REPEAT" in
+case "$repeat" in
 	"Track")
-		REPEAT_ICON=""
+		repeat_icon=""
 		icon_count=$(($icon_count + 1))
 		;;
 	"Playlist")
-		REPEAT_ICON=""
+		repeat_icon=""
 		icon_count=$(($icon_count + 1))
 		;;
-	*) REPEAT_ICON="" ;;
+	*) repeat_icon="" ;;
 esac
 
-TOGGLES="$SHUFFLE_ICON $REPEAT_ICON"
+toggles="$shuffle_icon $repeat_icon"
 
-if [[ -n $TOGGLES ]]; then
-	TOGGLES=" | $TOGGLES"
+if [[ ${#toggles} -gt 1 ]]; then
+	toggles=" | $toggles"
 fi
 
-GAP=10
-SCREEN_WIDTH=1920
-ICON_WIDTH=9
-TEXT_WIDTH=8
+gap=10
+screen_width=1920
+icon_width=9
+text_width=8
 
-ICON_SUM=0
-TEXT_SUM=0
+icon_sum=0
+text_sum=0
 
-while IFS=";" read -r ICON CHAR; do
-    ICON_SUM=$((ICON_SUM + ICON))
-    CHAR_SUM=$((CHAR_SUM + CHAR))
-done < "$RIGHT_FILE"
+while IFS=";" read -r icon char; do
+    icon_sum=$(( icon_sum + icon ))
+    char_sum=$(( char_sum + char ))
+done < "$poly_right"
 
-RIGHT_PIXELS=$(( (ICON_SUM * ICON_WIDTH) + (CHAR_SUM * TEXT_WIDTH) + (GAP * TEXT_WIDTH)))
+right_pixels=$(( (icon_sum * icon_width) + (char_sum * text_width) + (gap * text_width) ))
 
-MAX_PIXELS=$(( SCREEN_WIDTH - 2 * RIGHT_PIXELS ))
+max_pixels=$(( screen_width - 2 * right_pixels ))
 
-REST=" - $ARTIST $STATUS_ICON$TOGGLES "
-REST_PIXELS=$(( (${#REST} - $icon_count) * $TEXT_WIDTH + $icon_count * $ICON_WIDTH ))
+spotify_rest=" - $artist $status_icon$toggles "
+rest_pixels=$(( (${#spotify_rest} - $icon_count) * $text_width + $icon_count * $icon_width ))
 
-OUTPUT="$TITLE$REST"
-OUTPUT_PIXELS=$(( (${#OUTPUT} - $icon_count) * $TEXT_WIDTH + $icon_count * $ICON_WIDTH ))
+output="$title$spotify_rest"
+output_pixels=$(( (${#output} - $icon_count) * $text_width + $icon_count * $icon_width ))
 
-if [[ $OUTPUT_PIXELS -gt $MAX_PIXELS ]]; then
-	DIFF=$(( ($OUTPUT_PIXELS - $MAX_PIXELS) ))
-	TITLE_LEN=${#TITLE}
-	ADJUSTED=$(( (MAX_PIXELS - REST_PIXELS) / $TEXT_WIDTH - 3))
-	TITLE="${TITLE:0:$ADJUSTED}..."
-	OUTPUT="$TITLE$REST"
+if [[ $output_pixels -gt $max_pixels ]]; then
+	diff=$(( ($output_pixels - $max_pixels) ))
+	title_len=${#title}
+	title_adj=$(( (max_pixels - rest_pixels) / $text_width - 3 ))
+	title_min=5
+
+	if [[ $title_adj -lt $title_min ]]; then
+		artist_adj=$(( ${#artist} + $title_adj - $title_min))
+		title_adj=$title_min
+		artist="${artist:0:$artist_adj}..."
+		spotify_rest=" - $artist $status_icon$toggles "
+	elif [[ $title_adj -gt 30 ]]; then
+		title_adj=30
+	fi
+
+	title="${title:0:$title_adj}..."
+	output="$title$spotify_rest"
 fi
 
-echo "$OUTPUT"
+echo "$output"

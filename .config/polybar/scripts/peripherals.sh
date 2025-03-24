@@ -1,11 +1,14 @@
 #!/bin/bash
 
+idx=9
 data="$HOME/.config/polybar/data"
-right_file="$data/right.txt"
+poly_right="$data/right.txt"
 
-if [[ ! -f $right_file ]]; then
-        touch $right_file
-        printf '0;0\n%.0s' {1..9} > $right_file
+entries=$(cat "$data/right_entries.txt")
+
+if [[ ! -f $poly_right ]]; then
+        touch $poly_right
+        printf '0;0\n%.0s' $(seq 1 "$entries") > "$poly_right"
 fi
 
 icon_count=0
@@ -32,7 +35,12 @@ fi
 
 output="$screen$camera$mic"
 
-len=$((${#output} + 3 - $icon_count))
-sed -i "1s/.*/$icon_count;$len/" "$right_file"
+if [[ -n $output ]]; then
+	len=$((${#output} + 3 - $icon_count))
+else
+	len=0
+fi
+
+sed -i "${idx}s/.*/$icon_count;$len/" "$poly_right"
 
 echo "$output"

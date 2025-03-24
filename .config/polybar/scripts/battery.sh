@@ -1,33 +1,38 @@
 #!/bin/bash
 
+idx=3
 data="$HOME/.config/polybar/data"
-right_file="$data/right.txt"
+poly_right="$data/right.txt"
 
-if [[ ! -f $right_file ]]; then
-	touch $right_file
-        printf '0;0\n%.0s' {1..9} > $right_file
+entries=$(cat "$data/right_entries.txt")
+
+if [[ ! -f $poly_right ]]; then
+	touch $poly_right
+	printf '0;0\n%.0s' $(seq 1 "$entries") > "$poly_right"
 fi
 
-bat=/sys/class/power_supply/BAT0
-capacity=$(cat $bat/capacity)
+supply="/sys/class/power_supply"
+bat="$supply/BAT0"
+
+bat_cap=$(cat $bat/capacity)
 
 icon_count=0
 
-if [[ $capacity -gt 90 ]]; then
+if [[ $bat_cap -gt 90 ]]; then
     icon="󰁹"
-elif [[ $capacity -gt 80 ]]; then
+elif [[ $bat_cap -gt 80 ]]; then
     icon="󰂁"
-elif [[ $capacity -gt 70 ]]; then
+elif [[ $bat_cap -gt 70 ]]; then
     icon="󰂀"
-elif [[ $capacity -gt 60 ]]; then
+elif [[ $bat_cap -gt 60 ]]; then
     icon="󰁿"
-elif [[ $capacity -gt 50 ]]; then
+elif [[ $bat_cap -gt 50 ]]; then
     icon="󰁾"
-elif [[ $capacity -gt 40 ]]; then
+elif [[ $bat_cap -gt 40 ]]; then
     icon="󰁽"
-elif [[ $capacity -gt 30 ]]; then
+elif [[ $bat_cap -gt 30 ]]; then
     icon="󰁼"
-elif [[ $capacity -gt 20 ]]; then
+elif [[ $bat_cap -gt 20 ]]; then
     icon="󰁻"
 else
     icon="󰂎"
@@ -36,22 +41,32 @@ fi
 
 icon_count=$(($icon_count + 1))
 
-status=$(cat /sys/class/power_supply/BAT0/status)
+bat_status=$(cat $bat/status)
 
-if [[ $status == "Charging" ]]; then
+if [[ $bat_status == "Charging" ]]; then
 	icon="$icon󱐋"
 	icon_count=$(($icon_count + 1))
 fi
 
-if [ -d /sys/class/power_supply/hidpp_battery* ]; then
-	mouse_cap=$(cat /sys/class/power_supply/hidpp_battery*/capacity)
-	output="$icon $capacity% 󰍽 $mouse_cap%"
+mouse=$supply/hidpp_battery*
+
+if [ -d $mouse ]; then
+	mouse_cap=$(cat $mouse/capacity)
+	mouse_status=$(cat $mouse/status)
+
+	if [[ $mouse_status == "Charging" ]]; then
+		mouse_output="  󰍽 󱐋 $mouse_cap%"
+		icon_count=$(($icon_count + 1))
+	else
+		mouse_output="  󰍽 $mouse_cap%"
+	fi
+
 	icon_count=$(($icon_count + 1))
-else
-	output="$icon $capacity%"
 fi
 
+output="$icon $bat_cap%$mouse_output"
+
 len=$((${#output} + 3 - $icon_count))
-sed -i "7s/.*/$icon_count;$len/" "$right_file"
+sed -i "${idx}s/.*/$icon_count;$len/" "$poly_right"
 
 echo "$output"

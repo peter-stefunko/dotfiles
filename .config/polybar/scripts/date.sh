@@ -1,20 +1,24 @@
 #!/bin/bash
 
+idx=1
 data="$HOME/.config/polybar/data"
-right_file="$data/right.txt"
+poly_right="$data/right.txt"
+
+entries=$(cat "$data/right_entries.txt")
+
+if [[ ! -f $poly_right ]]; then
+        touch $poly_right
+        printf '0;0\n%.0s' $(seq 1 "$entries") > "$poly_right"
+fi
 
 icon_count=0
 
-if [[ ! -f $right_file ]]; then
-        touch $right_file
-        printf '0;0\n%.0s' {1..9} > $right_file
-fi
-
 date=$(date +"%a %d/%m/%Y")
+
 output=" $date"
 icon_count=$(($icon_count + 1))
 
 len=$((${#output} - $icon_count))
-sed -i "9s/.*/$icon_count;$len/" "$right_file"
+sed -i "${idx}s/.*/$icon_count;$len/" "$poly_right"
 
 echo "$output"
