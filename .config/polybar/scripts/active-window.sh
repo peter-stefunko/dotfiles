@@ -1,45 +1,45 @@
 #!/bin/bash
 
-DATA_DIR=$HOME/.config/polybar/data
+data=$HOME/.config/polybar/data
 
-UUIDS_FILE=$DATA_DIR/uuids.txt
-PROGS_FILE=$DATA_DIR/progs.txt
-COUNT_FILE=$DATA_DIR/count.txt
-ACTIVE_FILE=$DATA_DIR/active.txt
+uuids_file=$data/uuids.txt
+progs_file=$data/progs.txt
+count_file=$data/count.txt
+active_file=$data/active.txt
 
-if [[ ! -f "$UUIDS_FILE" ]]; then
-        touch "$UUIDS_FILE"
+if [[ ! -f "$uuids_file" ]]; then
+        touch "$uuids_file"
 fi
 
-if [[ ! -f "$PROGS_FILE" ]]; then
-        touch "$PROGS_FILE"
+if [[ ! -f "$progs_file" ]]; then
+        touch "$progs_file"
 fi
 
-if [[ ! -f "$COUNT_FILE" ]]; then
-        touch "$COUNT_FILE"
+if [[ ! -f "$count_file" ]]; then
+        touch "$count_file"
 fi
 
-if [[ ! -f "$ACTIVE_FILE" ]]; then
-        touch "$ACTIVE_FILE"
+if [[ ! -f "$active_file" ]]; then
+        touch "$active_file"
 fi
 
-ACTIVE_UUID=$(cat "$ACTIVE_FILE")
+active_uuid=$(cat "$active_file")
 
-if [[ -z "$ACTIVE_UUID" ]]; then
+if [[ -z "$active_uuid" ]]; then
 	echo
 	exit
 fi
 
-LINE_NUM=$(grep -n "$ACTIVE_UUID" "$UUIDS_FILE" | cut -d: -f1)
-ACTIVE_NAME=$(awk -v N="$LINE_NUM" 'NR==N' "$PROGS_FILE" | awk -F ';' '{print $1}')
-ACTIVE_ICON=$(awk -v N="$LINE_NUM" 'NR==N' "$PROGS_FILE" | awk -F ';' '{print $2}')
+line_num=$(grep -n "$active_uuid" "$uuids_file" | cut -d: -f1)
+active_name=$(awk -v N="$line_num" 'NR==N' "$progs_file" | awk -F ';' '{print $1}')
+active_icon=$(awk -v N="$line_num" 'NR==N' "$progs_file" | awk -F ';' '{print $2}')
 
-if [[ -z "$ACTIVE_NAME" ]]; then
+if [[ -z "$active_name" ]]; then
 	echo "  Desktop"
 else
-	if [[ "$ACTIVE_ICON" == "$ACTIVE_NAME" ]]; then
-		echo "$ACTIVE_NAME"
+	if [[ "$active_icon" == "$active_name" ]]; then
+		echo "$active_name"
 	else
-		echo "$ACTIVE_ICON $ACTIVE_NAME"
+		echo "$active_icon $active_name"
 	fi
 fi
