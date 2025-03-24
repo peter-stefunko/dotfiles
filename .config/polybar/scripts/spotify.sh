@@ -1,6 +1,16 @@
 #!/bin/bash
 
+DATA="$HOME/.config/polybar/data"
+RIGHT_FILE="$DATA/right.txt"
+
+if [[ ! -f $RIGHT_FILE ]]; then
+        touch $RIGHT_FILE
+        printf '0;0\n%.0s' {1..9} > $RIGHT_FILE
+fi
+
 STATUS=$(playerctl -p spotify status 2>/dev/null)
+
+icon_count=0
 
 if [ "$STATUS" == "Playing" ]; then
 	STATUS_ICON=
@@ -10,6 +20,8 @@ else
 	echo ""
 	exit
 fi
+
+icon_count=$(($icon_count + 1))
 
 TITLE=$(playerctl metadata title)
 ARTIST=$(playerctl metadata artist)
@@ -32,13 +44,20 @@ space=$(printf '\u00A0\u00A0')
 
 if [ "$SHUFFLE" = "On" ]; then
 	SHUFFLE_ICON=" "
+	icon_count=$(($icon_count + 1))
 else
 	SHUFFLE_ICON=""
 fi
 
 case "$REPEAT" in
-	"Track") REPEAT_ICON= ;;
-	"Playlist") REPEAT_ICON= ;;
+	"Track")
+		REPEAT_ICON=""
+		icon_count=$(($icon_count + 1))
+		;;
+	"Playlist")
+		REPEAT_ICON=""
+		icon_count=$(($icon_count + 1))
+		;;
 	*) REPEAT_ICON="" ;;
 esac
 
@@ -48,17 +67,35 @@ if [[ -n $TOGGLES ]]; then
 	TOGGLES=" | $TOGGLES"
 fi
 
-OUTPUT="$TITLE - $ARTIST $STATUS_ICON$TOGGLES "
-LEN=${#OUTPUT}
-MAX=60
-DIFF=$(($LEN - $MAX))
-TITLE_LEN=${#TITLE}
-ADJUSTED=$(($TITLE_LEN - $DIFF - 3))
+GAP=10
+SCREEN_WIDTH=1920
+ICON_WIDTH=9
+TEXT_WIDTH=8
 
-if [[ $LEN -gt $MAX ]]; then
+ICON_SUM=0
+TEXT_SUM=0
+
+while IFS=";" read -r ICON CHAR; do
+    ICON_SUM=$((ICON_SUM + ICON))
+    CHAR_SUM=$((CHAR_SUM + CHAR))
+done < "$RIGHT_FILE"
+
+RIGHT_PIXELS=$(( (ICON_SUM * ICON_WIDTH) + (CHAR_SUM * TEXT_WIDTH) + (GAP * TEXT_WIDTH)))
+
+MAX_PIXELS=$(( SCREEN_WIDTH - 2 * RIGHT_PIXELS ))
+
+REST=" - $ARTIST $STATUS_ICON$TOGGLES "
+REST_PIXELS=$(( (${#REST} - $icon_count) * $TEXT_WIDTH + $icon_count * $ICON_WIDTH ))
+
+OUTPUT="$TITLE$REST"
+OUTPUT_PIXELS=$(( (${#OUTPUT} - $icon_count) * $TEXT_WIDTH + $icon_count * $ICON_WIDTH ))
+
+if [[ $OUTPUT_PIXELS -gt $MAX_PIXELS ]]; then
+	DIFF=$(( ($OUTPUT_PIXELS - $MAX_PIXELS) ))
+	TITLE_LEN=${#TITLE}
+	ADJUSTED=$(( (MAX_PIXELS - REST_PIXELS) / $TEXT_WIDTH - 3))
 	TITLE="${TITLE:0:$ADJUSTED}..."
+	OUTPUT="$TITLE$REST"
 fi
-
-OUTPUT="$TITLE - $ARTIST $STATUS_ICON$TOGGLES "
 
 echo "$OUTPUT"

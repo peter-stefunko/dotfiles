@@ -1,22 +1,38 @@
 #!/bin/bash
 
-space=$(printf '\u00A0\u00A0')
+data="$HOME/.config/polybar/data"
+right_file="$data/right.txt"
+
+if [[ ! -f $right_file ]]; then
+        touch $right_file
+        printf '0;0\n%.0s' {1..9} > $right_file
+fi
+
+icon_count=0
 
 if lsof /dev/video0 >/dev/null 2>&1; then
-    	camera="$space󰄀"
+    	camera="  󰄀"
+    	icon_count=$(($icon_count + 1))
 fi
 
 if wpctl status 2>/dev/null | grep -A 10 "Streams:" | grep -q "capture_.*\[active\]"; then
+    	icon_count=$(($icon_count + 1))
+
 	if wpctl status | grep -A 22 "^Audio" | grep -A 7 "Sources:" | grep "*" | grep -q "MUTED"; then
-    		mic=󰍭
+    		mic="  󰍭"
     	else
-    		mic=
+    		mic="  "
     	fi
-    	mic="$space$mic"
 fi
 
 if wpctl status 2>/dev/null | awk '/Video/,/Settings/' | grep -E "^[[:space:]]+[0-9]+\." | grep -vE "kwin_wayland|plasmashell" | grep -q "active"; then
-    	screen="$space󰍹"
+    	screen="󰍹"
+    	icon_count=$(($icon_count + 1))
 fi
 
-echo "$screen$camera$mic"
+output="$screen$camera$mic"
+
+len=$((${#output} + 3 - $icon_count))
+sed -i "1s/.*/$icon_count;$len/" "$right_file"
+
+echo "$output"
