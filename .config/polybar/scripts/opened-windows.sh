@@ -1,149 +1,146 @@
 #!/bin/bash
 
-DATA_DIR=$HOME/.config/polybar/data
+data=$HOME/.config/polybar/data
 
-UUIDS_FILE=$DATA_DIR/uuids.txt
-PROGS_FILE=$DATA_DIR/progs.txt
-COUNT_FILE=$DATA_DIR/count.txt
-ACTIVE_FILE=$DATA_DIR/active.txt
+uuids_file=$data/uuids.txt
+progs_file=$data/progs.txt
+count_file=$data/count.txt
+active_file=$data/active.txt
 
-if [[ ! -f "$UUIDS_FILE" ]]; then
-	touch "$UUIDS_FILE"
+if [[ ! -f "$uuids_file" ]]; then
+	touch "$uuids_file"
 fi
 
-if [[ ! -f "$PROGS_FILE" ]]; then
-	touch "$PROGS_FILE"
+if [[ ! -f "$progs_file" ]]; then
+	touch "$progs_file"
 fi
 
-if [[ ! -f "$COUNT_FILE" ]]; then
-	touch "$COUNT_FILE"
+if [[ ! -f "$count_file" ]]; then
+	touch "$count_file"
 fi
 
-if [[ ! -f "$ACTIVE_FILE" ]]; then
-	touch "$ACTIVE_FILE"
+if [[ ! -f "$active_file" ]]; then
+	touch "$active_file"
 fi
 
-ACTIVE_UUID=$(kdotool getactivewindow 2>/dev/null | awk -F '{' '{print $2}' | awk -F '}' '{print $1}')
+active_uuid=$(kdotool getactivewindow 2>/dev/null | awk -F '{' '{print $2}' | awk -F '}' '{print $1}')
 
-if cat "$ACTIVE_FILE" | grep -q "$ACTIVE_UUID"; then
+if cat "$active_file" | grep -q "$active_uuid"; then
 	exit
 fi
 
-echo "$ACTIVE_UUID" > "$ACTIVE_FILE"
+echo "$active_uuid" > "$active_file"
 
-if ! cat "$UUIDS_FILE" | grep -q "$ACTIVE_UUID"; then
-	RESOURCE_CLASS=$(qdbus org.kde.KWin /KWin org.kde.KWin.getWindowInfo "$ACTIVE_UUID" | grep resourceClass | awk -F ': ' '{print $2}')
-	DESKTOP_PATH="/usr/share/applications"
-	DESKTOP_ENTRY="$DESKTOP_PATH/$RESOURCE_CLASS.desktop"
+if ! cat "$uuids_file" | grep -q "$active_uuid"; then
+	resource_class=$(qdbus org.kde.KWin /KWin org.kde.KWin.getWindowInfo "$active_uuid" | grep resourceClass | awk -F ': ' '{print $2}')
+	desktop_path="/usr/share/applications"
+	desktop_entry="$desktop_path/$resource_class.desktop"
 
-	if [[ ! -f "$DESKTOP_ENTRY" ]]; then
-		PROG_NAME="$RESOURCE_CLASS"
-		if [[ $RESOURCE_CLASS == "rofi" ]]; then
-			PROG_ICON=" "
-		elif [[ $RESOURCE_CLASS == "signal" ]]; then
-			PROG_ICON="󰭹 "
+	if [[ ! -f "$desktop_entry" ]]; then
+		prog_name="$resource_class"
+		if [[ "$resource_class" == "rofi" ]]; then
+			prog_icon=" "
+		elif [[ "$resource_class" == "signal" ]]; then
+			prog_icon="󰭹 "
 		else
-			PROG_NAME="Window"
-			PROG_ICON=" "
+			prog_name="Window"
+			prog_icon=" "
 		fi
 	else
-		PROG_NAME=$(cat "$DESKTOP_ENTRY" | grep "^Name=" -m 1 | awk -F '=' '{print $2}')
-		PROG_ICON="$PROG_NAME"
+		prog_name=$(cat "$desktop_entry" | grep "^Name=" -m 1 | awk -F '=' '{print $2}')
+		prog_icon="$prog_name"
 
-		if [[ "$PROG_NAME" == "1Password" ]]; then
-			PROG_ICON="󰌆 "
-		elif [[ "$PROG_NAME" == "Chromium Web Browser" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Discover" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Discord" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Dolphin" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Firefox ESR" ]]; then
-			PROG_ICON="󰈹 "
-		elif [[ "$PROG_NAME" == "Gwenview" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Kate" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Konsole" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "OBS Studio" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Okular" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Spotify" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Steam" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "System Settings" ]]; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "VLC media player" ]]; then
-			PROG_ICON="󰕼 "
-		elif [[ "$PROG_NAME" == "Visual Studio Code" ]]; then
-			PROG_ICON="󰨞 "
-		elif [[ "$PROG_NAME" == "Vivaldi" ]]; then
-			PROG_ICON=" "
-		elif echo "$PROG_NAME" | grep -q "CLion"; then
-			PROG_ICON=" "
-		elif echo "$PROG_NAME" | grep -q "DataGrip"; then
-			PROG_ICON=" "
-		elif echo "$PROG_NAME" | grep -q "LibreOffice"; then
-			PROG_ICON="󰈙 "
-		elif echo "$PROG_NAME" | grep -q "PyCharm"; then
-			PROG_ICON=" "
-		elif echo "$PROG_NAME" | grep -q "Rider"; then
-			PROG_ICON=" "
-		elif echo "$PROG_NAME" | grep -q "RustRover"; then
-			PROG_ICON=" "
-		elif [[ "$PROG_NAME" == "Plasma Desktop Workspace" ]]; then
-			PROG_NAME="Desktop"
-			PROG_ICON=" "
+		if [[ "$prog_name" == "1Password" ]]; then
+			prog_icon="󰌆 "
+		elif [[ "$prog_name" == "Chromium Web Browser" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Discover" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Discord" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Dolphin" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Firefox ESR" ]]; then
+			prog_icon="󰈹 "
+		elif [[ "$prog_name" == "Gwenview" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Kate" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Konsole" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "OBS Studio" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Okular" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Spotify" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Steam" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "System Settings" ]]; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "VLC media player" ]]; then
+			prog_icon="󰕼 "
+		elif [[ "$prog_name" == "Visual Studio Code" ]]; then
+			prog_icon="󰨞 "
+		elif [[ "$prog_name" == "Vivaldi" ]]; then
+			prog_icon=" "
+		elif echo "$prog_name" | grep -q "CLion"; then
+			prog_icon=" "
+		elif echo "$prog_name" | grep -q "DataGrip"; then
+			prog_icon=" "
+		elif echo "$prog_name" | grep -q "LibreOffice"; then
+			prog_icon="󰈙 "
+		elif echo "$prog_name" | grep -q "PyCharm"; then
+			prog_icon=" "
+		elif echo "$prog_name" | grep -q "Rider"; then
+			prog_icon=" "
+		elif echo "$prog_name" | grep -q "RustRover"; then
+			prog_icon=" "
+		elif [[ "$prog_name" == "Plasma Desktop Workspace" ]]; then
+			prog_name="Desktop"
+			prog_icon=" "
 		fi
 	fi
 
-	echo "$ACTIVE_UUID" >> "$UUIDS_FILE"
-
-#	if [[ ! "$PROG_NAME" == "Desktop" ]]; then
-	echo "$PROG_NAME;$PROG_ICON" >> "$PROGS_FILE"
-#	fi
+	echo "$active_uuid" >> "$uuids_file"
+	echo "$prog_name;$prog_icon" >> "$progs_file"
 fi
 
-for UUID in $(cat "$UUIDS_FILE"); do
-	INFO=$(qdbus org.kde.KWin /KWin org.kde.KWin.getWindowInfo "$UUID")
-	if [ -z "$INFO" ]; then
-		LINE_NUM=$(grep -n "$UUID" "$UUIDS_FILE" | cut -d: -f1)
-		sed -i "/$UUID/d" "$UUIDS_FILE"
-		sed -i "${LINE_NUM}d" "$PROGS_FILE"
+for uuid in $(cat "$uuids_file"); do
+	info=$(qdbus org.kde.KWin /KWin org.kde.KWin.getWindowInfo "$uuid")
+	if [ -z "$info" ]; then
+		line_num=$(grep -n "$uuid" "$uuids_file" | cut -d: -f1)
+		sed -i "/$uuid/d" "$uuids_file"
+		sed -i "${line_num}d" "$progs_file"
 	fi
 done
 
-RESULT=""
-TOTAL=0
+result=""
+total=0
 
-while IFS= read -r PROG; do
-	NAME=$(echo "$PROG" | awk -F ';' '{print $1}')
-	if [[ $NAME == "Desktop" ]]; then
+while IFS= read -r prog; do
+	name=$(echo "$prog" | awk -F ';' '{print $1}')
+	if [[ "$name" == "Desktop" ]]; then
 		continue
 	fi
 
-	COUNT=$(grep -c "^$PROG$" "$PROGS_FILE")
-	TOTAL=$(($TOTAL+$COUNT))
+	count=$(grep -c "^$prog$" "$progs_file")
+	total=$(($total+$count))
 
-	if [[ $COUNT == "1" ]]; then
-		COUNT=""
+	if [[ $count == "1" ]]; then
+		count=""
 	else
-		COUNT="$COUNT "
+		count="$count "
 	fi
 
-	ICON=$(echo "$PROG" | awk -F ';' '{print $2}')
+	icon=$(echo "$prog" | awk -F ';' '{print $2}')
 
-	if [ -z "$RESULT" ]; then
-		RESULT="$COUNT$ICON"
+	if [ -z "$result" ]; then
+		result="$count$icon"
 	else
-		RESULT="$RESULT | $COUNT$ICON"
+		result="$result | $count$icon"
     	fi
-done < <(sort "$PROGS_FILE" | uniq)
+done < <(sort "$progs_file" | uniq)
 
-echo $TOTAL > "$COUNT_FILE"
-echo "$RESULT"
+echo "$total" > "$count_file"
+echo "$result"
