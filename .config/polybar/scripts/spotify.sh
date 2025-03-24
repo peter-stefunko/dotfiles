@@ -56,7 +56,7 @@ if [[ ${#toggles} -gt 1 ]]; then
 	toggles=" | $toggles"
 fi
 
-gap=10
+gap=12
 screen_width=1920
 icon_width=9
 text_width=8
@@ -79,23 +79,30 @@ rest_pixels=$(( (${#spotify_rest} - $icon_count) * $text_width + $icon_count * $
 output="$title$spotify_rest"
 output_pixels=$(( (${#output} - $icon_count) * $text_width + $icon_count * $icon_width ))
 
+title_len=${#title}
+title_adj=$title_len
+
 if [[ $output_pixels -gt $max_pixels ]]; then
 	diff=$(( ($output_pixels - $max_pixels) ))
-	title_len=${#title}
 	title_adj=$(( (max_pixels - rest_pixels) / $text_width - 3 ))
-	title_min=5
+	title_min=15
 
 	if [[ $title_adj -lt $title_min ]]; then
 		artist_adj=$(( ${#artist} + $title_adj - $title_min))
 		title_adj=$title_min
 		artist="${artist:0:$artist_adj}..."
 		spotify_rest=" - $artist $status_icon$toggles "
-	elif [[ $title_adj -gt 30 ]]; then
-		title_adj=30
 	fi
 
-	title="${title:0:$title_adj}..."
-	output="$title$spotify_rest"
+	title="${title:0:$title_adj}"
 fi
+
+title_max=30
+
+if [[ $title_adj -gt $title_max || $title_adj -lt $title_len ]]; then
+	title="${title:0:$title_max}..."
+fi
+
+output="$title$spotify_rest"
 
 echo "$output"
