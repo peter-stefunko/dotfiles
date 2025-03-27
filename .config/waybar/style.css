@@ -1,0 +1,59 @@
+* {
+    font-family: "Hack Nerd Font";
+    font-size: 13px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 1;
+    padding-bottom: 1;
+    border: none;
+}
+
+window#waybar {
+    background: #282828;
+    color: #EBDBB2;
+    border: none;
+    border-radius: 0px;
+}
+
+#workspaces,
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-consumption,
+#custom-bluetooth,
+#custom-peripherals,
+#custom-spotify,
+#sway-language
+{
+    color: #EBDBB2;
+}
+
+#workspaces
+{
+    padding-left: 5;
+}
+
+#clock
+{
+    padding-right: 5;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    color: #EBDBB2;
+    border-radius: 0;
+}
+
+#workspaces button.focused {
+    color: #282828;
+    background: #EBDBB2;
+}
+
+#workspaces button.urgent {
+    color: #282828;
+    background: #D3869B;
+}

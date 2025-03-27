@@ -1,0 +1,146 @@
+{
+    "layer": "top",
+    "position": "top",
+    "width": "100%",
+    // "height": 22,
+    "margin": "0px 0px 0px 0px",
+    "spacing": 0,
+    
+    "modules-left": [
+	"sway/workspaces"
+    ],
+    
+    "modules-center": [
+	"custom/spotify",
+    ],
+    
+    "modules-right": [
+        "custom/peripherals",
+        "pulseaudio",
+        "network",
+        "sway/language",
+        "custom/consumption",
+        "battery",
+        "clock"
+    ],
+
+    // Modules configuration
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": " ",
+            "2": " ",
+            "3": " ",
+            "4": " ",
+            "5": " ",
+            "6": " ",
+            "7": " ",
+            "8": " "
+        },
+	"tooltip": false
+    },
+
+    "sway/language": {
+        "format": " {short} | ",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "expand": true,
+	"tooltip": false
+    },
+
+    "clock": {
+        "format": "󱑂 {:%H:%M:%S |  %a %d/%m/%Y}",
+        "interval": 1,
+	"tooltip": false
+    },
+
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "{}% ",
+	"tooltip": false
+    },
+
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30
+            // "critical": 15
+        },
+        "format": " {icon} {capacity}% | ",
+        "format-charging": " {icon} 󱐋 {capacity}% | ",
+        // "format-plugged": " {icon}  {capacity}% | ",
+        "format-warning": " {icon}  {capacity}% | ",
+        // "format-icons": ["", "", "", "", ""],
+        "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
+	"tooltip": false
+        
+    },
+
+    "network": {
+        "format-wifi": "  {essid} ({signalStrength}%) | ",
+        "format-ethernet": "{ipaddr}/{cidr}  | ",
+        // "tooltip-format": "{ifname} via {gwaddr} ",
+        // "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "󰤮 | ",
+        // "format-alt": "{ifname}: {ipaddr}/{cidr} | ",
+	"tooltip": false
+    },
+
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} {volume}% | {format_source}",
+        "format-bluetooth": "{icon}  {volume}% | {format_source}",
+        "format-bluetooth-muted": "{icon}    | {format_source}",
+        "format-muted": "  | {format_source}",
+        "format-source": " {volume}% | ",
+        "format-source-muted": "  | ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", " "]
+        },
+        "on-click": "pavucontrol",
+	"tooltip": false
+    },
+
+    "custom/spotify": {
+        "exec": "~/.config/polybar/scripts/spotify.sh",
+        "interval": 1,
+	"tooltip": false
+    },
+
+    "custom/peripherals": {
+        "exec": "~/.config/polybar/scripts/peripherals.sh",
+        "format": "{} | ",
+        "interval": 1,
+	"tooltip": false
+    },
+
+    "custom/bluetooth": {
+        "exec": "~/.config/polybar/scripts/bluetooth.sh",
+        "interval": 2,
+	"tooltip": false
+    },
+
+    "custom/consumption": {
+        "exec": "~/.config/polybar/scripts/consumption.sh",
+        "format": " {} |",
+        "interval": 3,
+	"tooltip": false
+    },
+
+    "custom/spotify": {
+	"exec": "~/.config/waybar/scripts/spotify.sh",
+	"interval": 1,
+	"tooltip": false
+    }
+}
