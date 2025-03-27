@@ -136,5 +136,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export XDG_CACHE_HOME="$HOME/.cache"
 export QT_LOGGING_RULES="kwin_*.debug=true"
-
-export PATH=$PATH:/usr/sbin
