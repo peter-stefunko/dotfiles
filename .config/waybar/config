@@ -24,7 +24,6 @@
         "clock"
     ],
 
-    // Modules configuration
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -44,8 +43,6 @@
 
     "sway/language": {
         "format": " {short} | ",
-        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
-        "expand": true,
 	"tooltip": false
     },
 
@@ -75,7 +72,6 @@
         "format-charging": " {icon} 󱐋 {capacity}% | ",
         // "format-plugged": " {icon}  {capacity}% | ",
         "format-warning": " {icon}  {capacity}% | ",
-        // "format-icons": ["", "", "", "", ""],
         "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
 	"tooltip": false
         
@@ -83,21 +79,18 @@
 
     "network": {
         "format-wifi": "  {essid} ({signalStrength}%) | ",
-        "format-ethernet": "{ipaddr}/{cidr}  | ",
-        // "tooltip-format": "{ifname} via {gwaddr} ",
-        // "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "󰤮 | ",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr} | ",
+        "format-ethernet": "  | ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "󰤮  | ",
 	"tooltip": false
     },
 
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}% | {format_source}",
         "format-bluetooth": "{icon}  {volume}% | {format_source}",
         "format-bluetooth-muted": "{icon}    | {format_source}",
         "format-muted": "  | {format_source}",
-        "format-source": " {volume}% | ",
+        "format-source": " | ",
         "format-source-muted": "  | ",
         "format-icons": {
             "headphone": "",
@@ -108,31 +101,24 @@
             "car": "",
             "default": ["", "", " "]
         },
-        "on-click": "pavucontrol",
-	"tooltip": false
-    },
-
-    "custom/spotify": {
-        "exec": "~/.config/polybar/scripts/spotify.sh",
-        "interval": 1,
 	"tooltip": false
     },
 
     "custom/peripherals": {
-        "exec": "~/.config/polybar/scripts/peripherals.sh",
+        "exec": "~/.config/waybar/scripts/peripherals.sh",
         "format": "{} | ",
         "interval": 1,
 	"tooltip": false
     },
 
     "custom/bluetooth": {
-        "exec": "~/.config/polybar/scripts/bluetooth.sh",
+        "exec": "~/.config/waybar/scripts/bluetooth.sh",
         "interval": 2,
 	"tooltip": false
     },
 
     "custom/consumption": {
-        "exec": "~/.config/polybar/scripts/consumption.sh",
+        "exec": "~/.config/waybar/scripts/consumption.sh",
         "format": " {} |",
         "interval": 3,
 	"tooltip": false
