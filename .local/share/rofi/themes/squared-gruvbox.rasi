@@ -1,7 +1,7 @@
 /* Author: Newman Sanchez (https://github.com/newmanls) */
 
 * {
-    font:   "FiraCode Nerd Font Medium 12";
+    font:   "JetBrainsMono Nerd Font 12";
 
     bg0:     #1D2021;
     bg1:     #1D2021;
