@@ -3,25 +3,23 @@ set -e
 
 cleanup() {
     echo "Stopping the proxy..."
-    kill $proxy_pid 2>/dev/null || true  # Avoid errors if the proxy isn't running
+    kill $proxy_pid 2>/dev/null || true
     echo "Proxy stopped. Exiting script."
 }
 
 trap cleanup EXIT
 timeout=3
-arti_path="arti"
 
 echo "Starting Arti proxy"
-$arti_path proxy -l debug -p 9150 > /dev/null 2>&1 &
+arti proxy -l debug -p 9150 > /dev/null 2>&1 &
 proxy_pid=$!
 echo "Proxy started with PID $proxy_pid"
 
 echo "Waiting $timeout seconds..."
 sleep $timeout
 
-browser_path="$HOME/Downloads/tor-browser"
 echo "Starting Tor Browser"
-cd $browser_path && TOR_PROVIDER=none TOR_SOCKS_PORT=9150 "$browser_path/start-tor-browser.desktop" &
+TOR_PROVIDER=none TOR_SOCKS_PORT=9150 torbrowser-launcher &
 
 echo "Waiting $timeout seconds"
 sleep $timeout
@@ -43,4 +41,3 @@ done
 
 echo "Tor Browser closed, stopping proxy"
 kill $proxy_pid 2>/dev/null || true
-
