@@ -20,7 +20,7 @@ datestr=%a, %d/%m/%Y
 effect-blur=3x3
 
 # Font
-font=Hack Nerd Font
+font=JetBrainsMono Nerd Font
 font-size=52
 
 # Indicator
