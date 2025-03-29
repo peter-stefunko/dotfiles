@@ -19,3 +19,5 @@ PS1='[\u@\h \W]\$ '
 if [ -f /home/peter/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
 	source /home/peter/.config/synth-shell/synth-shell-prompt.sh
 fi
+
+eval "$(dircolors -b ~/.dircolors)"
