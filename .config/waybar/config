@@ -2,9 +2,9 @@
     "layer": "top",
     "position": "top",
     "width": "100%",
-    // "height": 22px,
-    "margin": "0px 0px 0px 0px",
-    "spacing": 0px,
+    // "height": 22,
+    "margin": "0 0 0 0",
+    "spacing": 0,
     
     "modules-left": [
 	"sway/workspaces"
