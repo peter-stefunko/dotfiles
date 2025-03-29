@@ -22,7 +22,7 @@ set $menu rofi -show drun -normal-window
 ### Custom keybind
 #bindsym $mod+ctrl+q exec systemctl poweroff
 #bindsym $mod+ctrl+r exec systemctl reboot
-#bindsym $mod+ctrl+s exec systemctl suspend
+bindsym $mod+ctrl+s exec systemctl suspend
 bindsym $mod+ctrl+e exec sway exit
 bindsym $mod+ctrl+l exec swaylock
 
