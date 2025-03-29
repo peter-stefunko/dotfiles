@@ -1,0 +1,68 @@
+### Options
+ignore-empty-password
+
+### Appearance
+# Other
+disable-caps-lock-text
+hide-keyboard-layout
+
+# Background
+image=/home/peter/.local/share/wallpapers/lock-screen.png
+
+# Backspace
+bs-hl-color=d79921
+caps-lock-bs-hl-color=d79921
+
+# Effects
+clock
+timestr=%H:%M:%S
+datestr=%a, %d/%m/%Y
+effect-blur=3x3
+
+# Font
+font=Hack Nerd Font
+font-size=52
+
+# Indicator
+indicator
+indicator-caps-lock
+indicator-idle-visible
+indicator-radius=160
+indicator-thickness=20
+
+# Inside
+inside-color=1d2021aa
+inside-clear-color=1d2021aa
+inside-caps-lock-color=1d2021aa
+inside-ver-color=1d2021aa
+inside-wrong-color=1d2021aa
+
+# Key press
+key-hl-color=ebdbb2
+caps-lock-key-hl-color=ebdbb2
+
+# Layout
+layout-bg-color=00000000
+layout-border-color=00000000
+layout-text-color=ebdbb2
+
+# Line
+line-color=1d2021
+line-clear-color=1d2021
+line-caps-lock-color=1d2021
+line-ver-color=1d2021
+line-wrong-color=1d2021
+
+# Ring
+ring-color=282828
+ring-clear-color=d79921
+ring-caps-lock-color=d65d0e
+ring-ver-color=b16286
+ring-wrong-color=cc241d
+
+# Text
+text-color=ebdbb2
+text-clear-color=ebdbb2
+text-caps-lock-color=ebdbb2
+text-ver-color=ebdbb2
+text-wrong-color=ebdbb2
