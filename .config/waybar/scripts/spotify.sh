@@ -44,7 +44,7 @@ fi
 rest=" - $artist $status_icon$toggles"
 output="$title$rest"
 output_len=${#output}
-max=80
+max=55
 
 if [[ $output_len -gt $max ]]; then
 	adj=$(( $max - 3 ))
