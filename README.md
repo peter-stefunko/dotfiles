@@ -1,1 +1,1 @@
-debian-t16 dotfiles
+lenovo thinkpad t16 linux dotfiles - currently using arch
