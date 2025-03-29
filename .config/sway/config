@@ -16,35 +16,15 @@ set $right l
 # Your preferred terminal emulator
 set $term foot
 # Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
 for_window [class="Rofi"] floating enable, border none
 set $menu rofi -show drun -normal-window
 
-include /etc/sway/config-vars.d/*
-
-### Autostart
-exec foot -e sh -c "fastfetch; exec bash"
-exec vivaldi-stable
-exec spotify
-exec discord
-exec amixer set Master 0%
-exec sway-alttab
-
-### No titlebars
-#default_border none
-#for_window [title="^.*"] title_format ""
-#default_border normal 0
-#default_floating_border normal 0
-font pango:monospace 0
-#titlebar_border_thickness 0
-titlebar_padding 1
-
 ### Custom keybind
-bindsym $mod+ctrl+q exec systemctl poweroff
-bindsym $mod+ctrl+r exec systemctl reboot
-bindsym $mod+ctrl+s exec systemctl suspend
+#bindsym $mod+ctrl+q exec systemctl poweroff
+#bindsym $mod+ctrl+r exec systemctl reboot
+#bindsym $mod+ctrl+s exec systemctl suspend
 bindsym $mod+ctrl+e exec sway exit
+bindsym $mod+ctrl+l exec swaylock
 
 # Rofi
 bindsym $mod+slash exec rofi -show run -normal-window
@@ -60,7 +40,7 @@ bindsym XF86MonBrightnessUp exec brightnessctl -d intel_backlight set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl -d intel_backlight set 5%-
 
 # Display manager
-bindsym XF86Display exec wlay
+bindsym XF86Display exec nwg-displays
 
 # Select network
 bindsym $mod+n exec nmcli-rofi.sh
@@ -81,7 +61,6 @@ assign [app_id="firefox-esr"] workspace 2
 assign [class="Vivaldi-stable"] workspace 2
 
 assign [class="Code"] workspace 3
-assign [class="jetbrains-clon"] workspace 3
 assign [class="jetbrains-*"] workspace 3
 
 assign [class="Spotify"] workspace 4
@@ -111,16 +90,25 @@ output * bg /home/peter/.local/share/wallpapers/background.png fill
 # Example configuration:
 #
 exec swayidle -w \
-	timeout 480 'swaylock -f -c 000000' \
-	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-	before-sleep 'swaylock -f -c 000000'
+         timeout 480 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
-
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -162,7 +150,7 @@ input "type:keyboard" {
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
-    # Or use $mod+[up|down|leftmM|right]
+    # Or use $mod+[up|down|left|right]
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
@@ -267,24 +255,41 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-#bar {
-#    position top
-#
-#    # When the status_command prints a new line to stdout, swaybar updates.
-#    # The default just shows the current date and time.
-#    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-#
-#    colors {
-#        statusline #ffffff
-#        background #323232
-#        inactive_workspace #32323200 #32323200 #5c5c5c
-#    }
-#}
+### Theme
+# Colors
+set $border #1d2021
+set $focused_border #ebdbb2
+set $text #1d2021
+set $focused_text #ebdbb2
+set $urgent #b16286
+set $warning #d79921
 
+# Window Borders
+client.focused $focused_border $focused_border $focused_text $urgent
+client.unfocused $border $border $text $border
+client.urgent $urgent $urgent $focused_text $urgent
+client.focused_inactive $border $border $text $border
+
+focus_on_window_activation focus
+
+### No titlebars
+default_border normal 1
+default_floating_border normal 1
+font pango:monospace 1
+titlebar_border_thickness 0
+titlebar_padding 0
+
+### Autostart
 exec waybar &
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+exec foot -e sh -c "fastfetch; exec bash"
+exec spotify
+exec amixer set Master 0%
+exec amixer set Capture toggle
+
+exec sway-alttab
+exec always sway-alttab
+
 
 include /etc/sway/config.d/*
