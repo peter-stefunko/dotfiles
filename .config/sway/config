@@ -25,6 +25,8 @@ set $menu rofi -show drun -normal-window
 bindsym $mod+ctrl+s exec systemctl suspend
 bindsym $mod+ctrl+e exec sway exit
 bindsym $mod+ctrl+l exec swaylock
+bindsym $mod+ctrl+c exec nordvpn connect
+bindsym $mod+ctrl+d exec nordvpn disconnect
 
 # Rofi
 bindsym $mod+slash exec rofi -show run -normal-window
@@ -138,7 +140,7 @@ input "type:keyboard" {
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+ctrl+c reload
+    bindsym $mod+shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
     # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
