@@ -9,7 +9,7 @@ if pactl list sources | grep -E 'Name|State' | grep -A 1 "RUNNING" | grep "Name:
 fi
 
 if wpctl status 2>/dev/null | awk '/Video/,/Settings/' | grep -E "^[[:space:]]+[0-9]+\." | grep -vE "kwin_wayland|plasmashell" | grep -q "active"; then
-    	screen="󰍹 "
+    	screen="󰍹"
 fi
 
 output="$screen$camera$mic"
