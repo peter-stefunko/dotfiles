@@ -2,7 +2,6 @@
     "layer": "top",
     "position": "top",
     "width": "100%",
-    // "height": 22,
     "margin": "0 0 0 0",
     "spacing": 0,
     
@@ -21,28 +20,32 @@
         "sway/language",
         "custom/consumption",
         "battery",
+        "custom/mouse_bat",
         "clock"
     ],
 
     "sway/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": "{icon}",
-        "format-icons": {
-            "1": " ",
-            "2": " ",
-            "3": " ",
-            "4": " ",
-            "5": " ",
-            "6": " ",
-            "7": " ",
-            "8": " "
-        },
+	"disable-scroll": true,
+	"all-outputs": true,
+	"format": "{icon}",
+	"format-icons": {
+	    "1": " ",
+	    "2": " ",
+	    "3": " ",
+	    "4": " ",
+	    "5": " ",
+	    "6": " ",
+	    "7": " ",
+	    "8": " ",
+	    "9": "9 ",
+	    "10": "10 "
+	},
 	"tooltip": false
     },
 
     "sway/language": {
-        "format": " {short} | ",
+        "format": "{short} |",
+        "min-length": 4,
 	"tooltip": false
     },
 
@@ -52,25 +55,13 @@
 	"tooltip": false
     },
 
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-
-    "memory": {
-        "format": "{}% ",
-	"tooltip": false
-    },
-
     "battery": {
         "states": {
-            // "good": 95,
             "warning": 30
-            // "critical": 15
         },
         "format": " {icon} {capacity}% | ",
         "format-charging": " {icon} 󱐋 {capacity}% | ",
-        // "format-plugged": " {icon}  {capacity}% | ",
+        "format-plugged": " {icon}  {capacity}% | ",
         "format-warning": " {icon}  {capacity}% | ",
         "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
 	"tooltip": false
@@ -80,7 +71,7 @@
     "network": {
         "format-wifi": "  {essid} ({signalStrength}%) | ",
         "format-ethernet": "  | ",
-        "format-linked": "{ifname} (No IP) ",
+        "format-linked": "{ifname} (No IP)   | ",
         "format-disconnected": "󰤮  | ",
 	"tooltip": false
     },
@@ -94,8 +85,8 @@
         "format-source-muted": "  | ",
         "format-icons": {
             "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "hands-free": "󰓔",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
@@ -111,16 +102,17 @@
 	"tooltip": false
     },
 
-    "custom/bluetooth": {
-        "exec": "~/.config/waybar/scripts/bluetooth.sh",
-        "interval": 2,
+    "custom/consumption": {
+        "exec": "~/.config/waybar/scripts/consumption.sh",
+        "format": " {} | ",
+        "interval": 3,
 	"tooltip": false
     },
 
-    "custom/consumption": {
-        "exec": "~/.config/waybar/scripts/consumption.sh",
-        "format": " {} |",
-        "interval": 3,
+    "custom/mouse_bat": {
+	"exec": "~/.config/waybar/scripts/mouse_bat.sh",
+	"format": "{} | ",
+	"interval": 1,
 	"tooltip": false
     },
 
