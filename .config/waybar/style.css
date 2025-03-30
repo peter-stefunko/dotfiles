@@ -37,11 +37,6 @@ window#waybar {
     padding-left: 3px;
 }
 
-#clock
-{
-    padding-right: 5px;
-}
-
 #workspaces button {
     padding: 0px 10px;
     color: #EBDBB2;
@@ -56,4 +51,13 @@ window#waybar {
 #workspaces button.urgent {
     color: #282828;
     background: #D3869B;
+}
+
+#clock
+{
+    padding-right: 5px;
+}
+
+#custom-peripherals {
+    padding-left: 85px;
 }
