@@ -6,13 +6,13 @@
     padding-top: 1px;
     padding-bottom: 1px;
     border: none;
+    border-radius: 0px;
 }
 
-window#waybar {
-    background: #282828;
+window#waybar
+{
     color: #EBDBB2;
-    border: none;
-    border-radius: 0px;
+    background: #282828;
 }
 
 #workspaces,
@@ -39,26 +39,26 @@ window#waybar {
 
 #workspaces button
 {
-    padding: 0px 10px;
     color: #EBDBB2;
-    border-radius: 0px;
+    background-color: #282828;
+    padding: 0 10px;
+}
+
+#workspaces button:hover
+{
+    background: rgba(0, 0, 0, 0);
 }
 
 #workspaces button.focused
 {
     color: #282828;
-    background: #EBDBB2;
+    background-color: #EBDBB2;
 }
 
 #workspaces button.urgent
 {
     color: #282828;
-    background: #D3869B;
-}
-
-#clock
-{
-    padding-right: 5px;
+    background-color: #D3869B;
 }
 
 #custom-space
