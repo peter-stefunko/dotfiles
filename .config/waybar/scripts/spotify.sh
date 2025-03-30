@@ -41,14 +41,22 @@ else
 	fi
 fi
 
-rest=" - $artist $status_icon$toggles"
-output="$title$rest"
-output_len=${#output}
-max=55
+title_max=35
+title_len=${#title}
 
-if [[ $output_len -gt $max ]]; then
-	adj=$(( $max - 3 ))
-	output="${output:0:$adj}..."
+if [[ $title_len -gt $title_max ]]; then
+	adj=$(( $title_max - 3 ))
+	title="${title:0:$adj}..."
 fi
+
+artist_max=20
+artist_len=${#artist}
+
+if [[ $artist_len -gt $artist_max ]]; then
+	adj=$(( $artist_max - 3 ))
+	artist="${artist:0:$adj}..."
+fi
+
+output="$title - $artist $status_icon$toggles"
 
 echo "$output"
