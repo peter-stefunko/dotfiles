@@ -10,6 +10,7 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+alias yay-autoremove="yay -Rns $(yay -Qdtq)"
 
 # Default prompt
 PS1='[\u@\h \W]\$ '
