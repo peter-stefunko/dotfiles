@@ -1,4 +1,4 @@
-{
+ {
     "layer": "top",
     "position": "top",
     "width": "100%",
@@ -6,7 +6,7 @@
     "spacing": 0,
     
     "modules-left": [
-	"sway/workspaces"
+	"sway/workspaces",
     ],
     
     "modules-center": [
@@ -17,12 +17,13 @@
 	"custom/space",
         "custom/peripherals",
         "pulseaudio",
+	"custom/vpn",
         "network",
         "sway/language",
         "custom/consumption",
         "battery",
         "custom/mouse_bat",
-        "clock"
+        "clock",
     ],
 
     "sway/workspaces": {
@@ -39,42 +40,42 @@
 	    "7": " ",
 	    "8": " ",
 	    "9": "9 ",
-	    "10": "10 "
+	    "10": "10 ",
 	},
-	"tooltip": false
+	"disable-click": true,
+	"tooltip": false,
     },
 
     "sway/language": {
         "format": "{short} |",
         "min-length": 4,
-	"tooltip": false
-    },
-
-    "clock": {
-        "format": "󱑂 {:%H:%M:%S |  %a %d/%m/%Y}",
-        "interval": 1,
-	"tooltip": false
+	"tooltip": false,
     },
 
     "battery": {
         "states": {
-            "warning": 30
+            "warning": 30,
         },
         "format": " {icon} {capacity}% | ",
         "format-charging": " {icon} 󱐋 {capacity}% | ",
         "format-plugged": " {icon}  {capacity}% | ",
         "format-warning": " {icon}  {capacity}% | ",
         "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
-	"tooltip": false
+	"tooltip": false,
         
+    },
+
+    "clock": {
+        "format": "󱑂 {:%H:%M:%S |  %a %d/%m/%Y} ",
+        "interval": 1,
+	"tooltip": false,
     },
 
     "network": {
         "format-wifi": "  {essid} ({signalStrength}%) | ",
         "format-ethernet": "  | ",
-        "format-linked": "{ifname} (No IP)   | ",
         "format-disconnected": "󰤮  | ",
-	"tooltip": false
+	"tooltip": false,
     },
 
     "pulseaudio": {
@@ -91,30 +92,30 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", " "]
+            "default": ["", "", " "],
         },
-	"tooltip": false
-    },
-
-    "custom/peripherals": {
-        "exec": "~/.config/waybar/scripts/peripherals.sh",
-        "format": "{} | ",
-        "interval": 1,
-	"tooltip": false
+	"tooltip": false,
     },
 
     "custom/consumption": {
         "exec": "~/.config/waybar/scripts/consumption.sh",
         "format": " {} | ",
         "interval": 3,
-	"tooltip": false
+	"tooltip": false,
     },
 
     "custom/mouse_bat": {
 	"exec": "~/.config/waybar/scripts/mouse_bat.sh",
 	"format": "{} | ",
 	"interval": 1,
-	"tooltip": false
+	"tooltip": false,
+    },
+
+    "custom/peripherals": {
+        "exec": "~/.config/waybar/scripts/peripherals.sh",
+        "format": "{} | ",
+        "interval": 1,
+	"tooltip": false,
     },
 
     "custom/space": {
@@ -125,6 +126,13 @@
     "custom/spotify": {
 	"exec": "~/.config/waybar/scripts/spotify.sh",
 	"interval": 1,
-	"tooltip": false
-    }
+	"tooltip": false,
+    },
+
+    "custom/vpn": {
+	"exec": "~/.config/waybar/scripts/vpn.sh",
+	"format": "{} ",
+	"interval": 1,
+	"tooltip": false,
+    },
 }
