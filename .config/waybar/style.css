@@ -37,18 +37,21 @@ window#waybar {
     padding-left: 3px;
 }
 
-#workspaces button {
+#workspaces button
+{
     padding: 0px 10px;
     color: #EBDBB2;
     border-radius: 0px;
 }
 
-#workspaces button.focused {
+#workspaces button.focused
+{
     color: #282828;
     background: #EBDBB2;
 }
 
-#workspaces button.urgent {
+#workspaces button.urgent
+{
     color: #282828;
     background: #D3869B;
 }
@@ -58,6 +61,8 @@ window#waybar {
     padding-right: 5px;
 }
 
-#custom-peripherals {
+#custom-space
+{
+    color: #282828;
     padding-left: 85px;
 }
