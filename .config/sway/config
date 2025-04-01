@@ -1,156 +1,157 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
-#
-# Logo key. Use Mod1 for Alt.
-set $mod Mod4
-# Home row direction keys, like vim
-set $left h
-set $down j
-set $up k
-set $right l
-# Your preferred terminal emulator
-set $term foot
-# Your preferred application launcher
-for_window [class="Rofi"] floating enable, border none
-set $menu rofi -show drun
+# Mod key. Use Mod1 for Alt, Mod4 for Logo:
+    set $mod Mod4
 
-### Custom keybind
-#bindsym $mod+ctrl+q exec systemctl poweroff
-#bindsym $mod+ctrl+r exec systemctl reboot
-bindsym $mod+ctrl+s exec systemctl suspend
-bindsym $mod+ctrl+e exec sway exit
-bindsym $mod+ctrl+l exec swaylock
-bindsym $mod+ctrl+c exec nordvpn connect
-bindsym $mod+ctrl+d exec nordvpn disconnect
+# Home row direction keys:
+    set $left h
+    set $down j
+    set $up k
+    set $right l
 
-# Rofi
-bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}"
-bindsym $mod+Tab exec rofi -show window
+# Terminal:
+    set $term foot
 
-# Screenshot
-bindsym Print exec grim ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
-bindsym ctrl+Print exec grimshot save area ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
-bindsym shift+Print exec grimshot save active ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+# Launcher:
+    set $menu rofi -show drun
 
-# Brightness
-bindsym XF86MonBrightnessUp exec brightnessctl -d intel_backlight set +5%
-bindsym XF86MonBrightnessDown exec brightnessctl -d intel_backlight set 5%-
+# Player:
+    set $player spotify
 
-# Display manager
-bindsym XF86Display exec nwg-displays
 
-# Select network
-bindsym $mod+n exec nmcli-rofi.sh
+### Custom keybinds
+# Power:
+    bindsym $mod+ctrl+s exec systemctl suspend
+    bindsym $mod+ctrl+l exec swaylock
 
-# Volume
-bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
-bindsym XF86AudioLowerVolume exec amixer set Master 5%-
-bindsym XF86AudioMute exec amixer set Master toggle
+# Brightness:
+    bindsym XF86MonBrightnessUp exec brightnessctl -d intel_backlight set +5%
+    bindsym XF86MonBrightnessDown exec brightnessctl -d intel_backlight set 5%-
 
-# Mic
-bindsym XF86AudioMicMute exec amixer set Capture toggle
+# Alt-Tab:
+    bindsym $mod+grave exec sway-alttab
+    bindsym $mod+shift+grave exec pkill sway-alttab
+
+# Mic:
+    bindsym XF86AudioMicMute exec amixer set Capture toggle
+
+# Volume:
+    bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
+    bindsym XF86AudioLowerVolume exec amixer set Master 5%-
+    bindsym XF86AudioMute exec amixer set Master toggle
+
+# Player:
+    bindsym $mod+KP_4 exec playerctl -p $player previous
+    bindsym $mod+KP_5 exec playerctl -p $player play-pause
+    bindsym $mod+KP_6 exec playerctl -p $player next
+
+# Screenshots:
+    bindsym Print exec grim ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+    bindsym ctrl+Print exec grimshot save area ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+    bindsym shift+Print exec grimshot save active ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+
+# Rofi:
+    bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}"
+    bindsym $mod+Tab exec rofi -show window
+
+# Select network:
+    bindsym $mod+n exec nmcli-rofi.sh
+
+# Display manager:
+    bindsym XF86Display exec nwg-displays
+
 
 ### Assign workspaces
+# 1
 assign [app_id="foot"] workspace 1
 
+# 2
 assign [class="Chromium"] workspace 2
 assign [app_id="firefox-esr"] workspace 2
 assign [class="Vivaldi-stable"] workspace 2
 
+# 3
 assign [class="Code"] workspace 3
 assign [class="jetbrains-*"] workspace 3
 
+# 4
 assign [class="Spotify"] workspace 4
 
+# 5
 assign [class="discord"] workspace 5
 assign [class="Signal*"] workspace 5
 
+# 6
 # assign [class="vlc"] workspace 6
 
+# 7
 assign [class="steam"] workspace 7
 
+# 8
 assign [class="1Password"] workspace 8
 
+
 ### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/peter/.local/share/wallpapers/background.png fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+# Wallpaper
+output * bg /home/peter/.local/share/wallpapers/background.png fill
+
+
 ### Idle configuration
-#
-# Example configuration:
-#
 exec swayidle -w \
 	timeout 360 'swaylock -f -c 000000' \
 	timeout 480 'swaymsg "output * power off"' \
 	timeout 600 'systemctl suspend' \
 	resume 'swaymsg "output * power on"' \
 	before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+
 
 ### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
+# Touchpad
 input "type:touchpad" {
+    dwt enabled
     tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
 }
 
+# Keyboard
 input "type:keyboard" {
     xkb_layout us,sk
     xkb_options grp:alt_shift_toggle
     xkb_numlock enabled
 }
 
+
 ### Key bindings
 #
 # Basics:
 #
-    # Start a terminal
+    # Start terminal
     bindsym $mod+Return exec $term
 
     # Kill focused window
     bindsym $mod+Shift+q kill
 
-    # Start your launcher
+    # Start launcher
     bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
+    # Also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right mouse button for dragging.
     floating_modifier $mod normal
 
     # Reload the configuration file
     bindsym $mod+shift+c reload
 
-    # Exit sway (logs you out of your Wayland session)
-    # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    # Exit sway
+    bindsym $mod+ctrl+e exec swaymsg exit
 #
 # Moving around:
 #
@@ -205,9 +206,8 @@ input "type:keyboard" {
 #
 # Layout stuff:
 #
-    # You can "split" the current object of your focus with
+    # Split the current object of your focus
     # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
     bindsym $mod+b splith
     bindsym $mod+v splitv
 
@@ -243,10 +243,7 @@ input "type:keyboard" {
 # Resizing containers:
 #
 mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
+    # Shrink/grow width/height
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
     bindsym $up resize shrink height 10px
@@ -264,6 +261,7 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+
 ### Theme
 # Colors
 set $border #1d2021
@@ -274,11 +272,12 @@ set $urgent #b16286
 set $warning #d79921
 
 # Window Borders
-client.focused $focused_border $focused_border $focused_text $urgent
+client.focused $focused_border $focused_border $focused_text $border
 client.unfocused $border $border $text $border
 client.urgent $urgent $urgent $focused_text $urgent
 client.focused_inactive $border $border $text $border
 
+# Focus
 focus_on_window_activation focus
 
 ### No titlebars
@@ -288,16 +287,17 @@ font pango:monospace 1
 titlebar_border_thickness 0
 titlebar_padding 0
 
-### Autostart
-exec waybar &
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# Rofi
+for_window [class="Rofi"] floating enable, border none
 
-exec $term -e sh -c "fastfetch; exec bash"
+### Autostart
+exec waybar
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec sway-alttab
+exec $term
 exec spotify
 exec amixer set Master 0%
 exec amixer set Capture toggle
-
-exec always sway-alttab
 
 
 include /etc/sway/config.d/*
