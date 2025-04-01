@@ -42,6 +42,7 @@ window#waybar
     color: #EBDBB2;
     background-color: #282828;
     padding: 0 10px;
+    margin-right: 10px;
 }
 
 #workspaces button:hover

@@ -61,6 +61,7 @@
         "format-plugged": " {icon}  {capacity}% | ",
         "format-warning": " {icon}  {capacity}% | ",
         "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
+        "interval": 1,
 	"tooltip": false,
         
     },
@@ -99,7 +100,7 @@
 
     "custom/consumption": {
         "exec": "~/.config/waybar/scripts/consumption.sh",
-        "format": " {} | ",
+        "format": " {} |",
         "interval": 3,
 	"tooltip": false,
     },
