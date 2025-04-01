@@ -1,20 +1,25 @@
 #!/bin/bash
 
-status=$(playerctl -p spotify status 2>/dev/null)
+player=spotify
+
+if ! playerctl -l | grep -q $player; then
+	exit
+fi
+
+status=$(playerctl -p $player status 2>/dev/null)
 
 if [ "$status" == "Playing" ]; then
 	status_icon=""
 elif [ "$status" == "Paused" ]; then
 	status_icon=""
 else
-	echo ""
 	exit
 fi
 
-title=$(playerctl metadata title)
-artist=$(playerctl metadata artist)
-shuffle=$(playerctl shuffle)
-repeat=$(playerctl loop)
+title=$(playerctl -p $player metadata title)
+artist=$(playerctl -p $player metadata artist)
+shuffle=$(playerctl -p $player shuffle)
+repeat=$(playerctl -p $player loop)
 
 if [ "$shuffle" = "On" ]; then
 	shuffle_icon=""
