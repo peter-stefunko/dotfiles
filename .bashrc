@@ -9,6 +9,8 @@
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+alias clean="clear && fastfetch"
+
 alias bashrc="sudo nano $HOME/.bashrc"
 alias bash-profile="sudo nano $HOME/.bash_profile"
 alias profile="sudo nano $HOME/.profile"
