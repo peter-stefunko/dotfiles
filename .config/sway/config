@@ -61,6 +61,10 @@
 # Display manager:
     bindsym XF86Display exec nwg-displays
 
+# Connect to AirPods
+    bindsym $mod+shift+b exec bluetoothctl connect 20:78:CD:40:64:27
+    bindsym $mod+shift+d exec bluetoothctl disconnect 20:78:CD:40:64:27
+
 
 ### Assign workspaces
 # 1
