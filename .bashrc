@@ -9,6 +9,10 @@
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+alias bashrc="sudo nano $HOME/.bashrc"
+alias bash-profile="sudo nano $HOME/.bash_profile"
+alias profile="sudo nano $HOME/.profile"
+
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias yay-autoremove="yay -Rns $(yay -Qdtq)"
