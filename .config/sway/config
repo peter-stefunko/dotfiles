@@ -87,13 +87,10 @@ assign [class="discord"] workspace 5
 assign [class="Signal*"] workspace 5
 
 # 6
-# assign [class="vlc"] workspace 6
+assign [class="1Password"] workspace 6
 
 # 7
 assign [class="steam"] workspace 7
-
-# 8
-assign [class="1Password"] workspace 8
 
 
 ### Output configuration
@@ -298,8 +295,12 @@ for_window [class="Rofi"] floating enable, border none
 exec waybar
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec sway-alttab
+
 exec $term
+exec vivaldi-stable
+exec code
 exec spotify
+
 exec amixer set Master 0%
 exec amixer set Capture toggle
 
