@@ -70,7 +70,7 @@ assign [class="Spotify"] workspace 4
 assign [class="discord"] workspace 5
 assign [class="Signal*"] workspace 5
 
-assign [class="vlc"] workspace 6
+# assign [class="vlc"] workspace 6
 
 assign [class="steam"] workspace 7
 
@@ -116,9 +116,14 @@ exec swayidle -w \
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
+input "type:touchpad" {
+    tap enabled
+}
+
 input "type:keyboard" {
     xkb_layout us,sk
     xkb_options grp:alt_shift_toggle
+    xkb_numlock enabled
 }
 
 ### Key bindings
@@ -287,12 +292,11 @@ titlebar_padding 0
 exec waybar &
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-exec foot -e sh -c "fastfetch; exec bash"
+exec $TERM -e sh -c "fastfetch; exec bash"
 exec spotify
 exec amixer set Master 0%
 exec amixer set Capture toggle
 
-exec sway-alttab
 exec always sway-alttab
 
 
