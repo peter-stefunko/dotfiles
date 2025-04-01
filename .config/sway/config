@@ -17,7 +17,7 @@ set $right l
 set $term foot
 # Your preferred application launcher
 for_window [class="Rofi"] floating enable, border none
-set $menu rofi -show drun -normal-window
+set $menu rofi -show drun
 
 ### Custom keybind
 #bindsym $mod+ctrl+q exec systemctl poweroff
@@ -29,8 +29,8 @@ bindsym $mod+ctrl+c exec nordvpn connect
 bindsym $mod+ctrl+d exec nordvpn disconnect
 
 # Rofi
-bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}" -normal-window
-bindsym $mod+Tab exec rofi -show window -normal-window
+bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}"
+bindsym $mod+Tab exec rofi -show window
 
 # Screenshot
 bindsym Print exec grim ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
