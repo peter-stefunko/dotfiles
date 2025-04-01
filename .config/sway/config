@@ -29,7 +29,7 @@ bindsym $mod+ctrl+c exec nordvpn connect
 bindsym $mod+ctrl+d exec nordvpn disconnect
 
 # Rofi
-bindsym $mod+slash exec rofi -show run -normal-window
+bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}" -normal-window
 bindsym $mod+Tab exec rofi -show window -normal-window
 
 # Screenshot
@@ -292,7 +292,7 @@ titlebar_padding 0
 exec waybar &
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-exec $TERM -e sh -c "fastfetch; exec bash"
+exec $term -e sh -c "fastfetch; exec bash"
 exec spotify
 exec amixer set Master 0%
 exec amixer set Capture toggle
