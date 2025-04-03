@@ -81,6 +81,7 @@ assign [class="Vivaldi-stable"] workspace 2
 # 3
 assign [class="Code"] workspace 3
 assign [class="jetbrains-*"] workspace 3
+assign [class="rstudio"] workspace 3
 
 # 4
 assign [class="Spotify"] workspace 4
