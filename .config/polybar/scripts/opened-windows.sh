@@ -1,11 +1,15 @@
 #!/bin/bash
 
-data=$HOME/.config/polybar/data
+data="$HOME/.config/polybar/data"
 
-uuids_file=$data/uuids.txt
-progs_file=$data/progs.txt
-count_file=$data/count.txt
-active_file=$data/active.txt
+if [[ ! -d "$data" ]]; then
+        mkdir -p "$data"
+fi
+
+uuids_file="$data/uuids.txt"
+progs_file="$data/progs.txt"
+count_file="$data/count.txt"
+active_file="$data/active.txt"
 
 if [[ ! -f "$uuids_file" ]]; then
 	touch "$uuids_file"

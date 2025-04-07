@@ -2,8 +2,12 @@
 
 idx=6
 data="$HOME/.config/polybar/data"
-poly_right="$data/right.txt"
 
+if [[ ! -d "$data" ]]; then
+        mkdir -p "$data"
+fi
+
+poly_right="$data/right.txt"
 entries=$(cat "$data/right_entries.txt")
 
 if [[ ! -f $poly_right ]]; then
