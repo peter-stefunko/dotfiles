@@ -1,4 +1,4 @@
- {
+{
     "layer": "top",
     "position": "top",
     "width": "100%",
@@ -11,6 +11,8 @@
     
     "modules-center": [
 	"custom/spotify",
+	"custom/time_center",
+	"custom/date_center"
     ],
     
     "modules-right": [
@@ -23,7 +25,8 @@
         "custom/consumption",
         "battery",
         "custom/mouse_bat",
-        "clock",
+        "custom/time_right",
+        "custom/date_right"
     ],
 
     "sway/workspaces": {
@@ -56,10 +59,10 @@
         "states": {
             "warning": 30,
         },
-        "format": " {icon} {capacity}% | ",
-        "format-charging": " {icon} 󱐋 {capacity}% | ",
-        "format-plugged": " {icon}  {capacity}% | ",
-        "format-warning": " {icon}  {capacity}% | ",
+        "format": " {icon} {capacity}% ",
+        "format-charging": " {icon} 󱐋 {capacity}% ",
+        "format-plugged": " {icon}  {capacity}% ",
+        "format-warning": " {icon}  {capacity}% ",
         "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
         "interval": 1,
 	"tooltip": false,
@@ -133,6 +136,34 @@
     "custom/vpn": {
 	"exec": "~/.config/waybar/scripts/vpn.sh",
 	"format": "{} ",
+	"interval": 1,
+	"tooltip": false,
+    },
+
+    "custom/time_center": {
+	"exec": "~/.config/waybar/scripts/time_center.sh",
+	"format": "󱑂 {} | ",
+	"interval": 1,
+	"tooltip": false,
+    },
+
+    "custom/date_center": {
+	"exec": "~/.config/waybar/scripts/date_center.sh",
+	"format": " {}",
+	"interval": 1,
+	"tooltip": false,
+    },
+
+    "custom/time_right": {
+	"exec": "~/.config/waybar/scripts/time_right.sh",
+	"format": "| 󱑂 {} | ",
+	"interval": 1,
+	"tooltip": false,
+    },
+
+    "custom/date_right": {
+	"exec": "~/.config/waybar/scripts/date_right.sh",
+	"format": " {} ",
 	"interval": 1,
 	"tooltip": false,
     },

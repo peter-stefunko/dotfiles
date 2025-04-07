@@ -2,7 +2,10 @@
 
 player=spotify
 
+state="/tmp/spotify_playing"
+
 if ! playerctl -l | grep -q $player; then
+	rm $state 2>/dev/null
 	exit
 fi
 
@@ -13,8 +16,11 @@ if [ "$status" == "Playing" ]; then
 elif [ "$status" == "Paused" ]; then
 	status_icon=""
 else
+	rm $state 2>/dev/null
 	exit
 fi
+
+touch $state 2>/dev/null
 
 title=$(playerctl -p $player metadata title)
 artist=$(playerctl -p $player metadata artist)
