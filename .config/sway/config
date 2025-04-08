@@ -67,7 +67,7 @@
     bindsym $mod+period exec rofi -show window
 
 # Select network:
-    bindsym $mod+n exec ~/.config/sway/scripts/nmcli-rofi.sh
+    bindsym $mod+n exec ~/.config/sway/scripts/nmcli-rofi
 
 # Display manager:
     bindsym XF86Display exec nwg-displays
