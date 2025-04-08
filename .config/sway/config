@@ -118,11 +118,11 @@ output * bg /home/peter/.local/share/wallpapers/background.png fill
 
 ### Idle configuration
 exec swayidle -w \
-	timeout 360 'swaylock -f -c 000000' \
+	timeout 360 'swaylock' \
 	timeout 480 'swaymsg "output * power off"' \
 	timeout 600 'systemctl suspend-then-hibernate' \
 	resume 'swaymsg "output * power on"' \
-	before-sleep 'swaylock -f -c 000000'
+	before-sleep 'swaylock'
 
 
 ### Input configuration
