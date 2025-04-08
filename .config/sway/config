@@ -22,6 +22,10 @@
 # Alt-tab script
     set $alttab ~/.config/sway/scripts/alttab
 
+# Screenshot format
+    set $sc_format $(date +%Y-%m-%d_%H-%M-%S)
+
+
 ### Custom keybinds
 # Power:
     bindsym $mod+ctrl+s exec systemctl suspend-then-hibernate
@@ -51,9 +55,9 @@
     bindsym $mod+KP_6 exec playerctl -p $player next
 
 # Screenshots:
-    bindsym Print exec grim ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
-    bindsym ctrl+Print exec grimshot save area ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
-    bindsym shift+Print exec grimshot save active ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+    bindsym Print exec grim ~/Pictures/screenshots/$sc_format.png
+    bindsym ctrl+Print exec grimshot save area ~/Pictures/screenshots/$sc_format.png
+    bindsym shift+Print exec grimshot save active ~/Pictures/screenshots/$sc_format.png
 
 # Rofi:
     bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}"
