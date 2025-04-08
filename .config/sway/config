@@ -25,6 +25,9 @@
 # Screenshot format
     set $sc_format $(date +%Y-%m-%d_%H-%M-%S)
 
+# AirPods MAC address
+    set $airpods 20:78:CD:40:64:27
+
 
 ### Custom keybinds
 # Power:
@@ -70,8 +73,8 @@
     bindsym XF86Display exec nwg-displays
 
 # Connect/disconnect AirPods
-    bindsym $mod+shift+b exec bluetoothctl connect 20:78:CD:40:64:27
-    bindsym $mod+shift+d exec bluetoothctl disconnect 20:78:CD:40:64:27
+    bindsym $mod+shift+b exec bluetoothctl connect $airpods
+    bindsym $mod+shift+d exec bluetoothctl disconnect $airpods
 
 # NordVPN
     bindsym $mod+ctrl+c exec nordvpn connect
