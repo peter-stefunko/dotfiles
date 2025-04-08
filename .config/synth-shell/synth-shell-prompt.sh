@@ -511,19 +511,19 @@ enable_command_on_new_line=false  # Add new line between prompt and command
 ##==============================================================================
 ## USER
 ##==============================================================================
-font_color_user="255"
-background_user="137"
+font_color_user="white"
+background_user="blue"
 texteffect_user="bold"
 ##==============================================================================
 ## HOST
 ##==============================================================================
-font_color_host="242"
-background_host="180"
+font_color_host="white"
+background_host="light-blue"
 texteffect_host="bold"
 ##==============================================================================
 ## PWD (working dir)
 ##==============================================================================
-font_color_pwd="242"
+font_color_pwd="dark-gray"
 background_pwd="white"
 texteffect_pwd="bold"
 max_pwd_char="25"
@@ -531,8 +531,8 @@ pwd_trunc_symbol="…"
 ##==============================================================================
 ## GIT
 ##==============================================================================
-font_color_git="255"
-background_git="173"
+font_color_git="light-gray"
+background_git="dark-gray"
 texteffect_git="bold"
 git_symbol_synced=''
 git_symbol_unpushed=' ▲'
@@ -547,8 +547,8 @@ git_update_period_minutes=15	# Use -1 to disable automatic updates
 ##==============================================================================
 ## PYENV
 ##==============================================================================
-font_color_pyenv="255"
-background_pyenv="95"
+font_color_pyenv="white"
+background_pyenv="blue"
 texteffect_pyenv="bold"
 ##==============================================================================
 ## KUBERNETES
@@ -572,7 +572,7 @@ clock_format="%H:%M"
 ##==============================================================================
 ## INPUT (user typed command)
 ##==============================================================================
-font_color_input="137"
+font_color_input="45"
 background_input="none"
 texteffect_input="bold"
 #!/usr/bin/env bash

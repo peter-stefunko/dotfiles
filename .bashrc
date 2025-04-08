@@ -35,10 +35,22 @@ alias foot-config="sudo nano $XDG_CONFIG_HOME/foot/foot.ini"
 # Default prompt
 PS1='[\u@\h \W]\$ '
 
+eval "$(dircolors -b ~/.dircolors)"
+
 ##-----------------------------------------------------
 ## synth-shell-prompt.sh
 if [ -f /home/peter/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
 	source /home/peter/.config/synth-shell/synth-shell-prompt.sh
 fi
 
-eval "$(dircolors -b ~/.dircolors)"
+##-----------------------------------------------------
+## alias
+if [ -f /home/peter/.config/synth-shell/alias.sh ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/peter/.config/synth-shell/alias.sh
+fi
+
+##-----------------------------------------------------
+## better-history
+if [ -f /home/peter/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/peter/.config/synth-shell/better-history.sh
+fi
