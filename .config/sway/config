@@ -121,7 +121,7 @@ output * bg ~/.local/share/wallpapers/background.png fill
 
 ### Idle configuration
 exec swayidle -w \
-	timeout 360 'swaylock' \
+	timeout 360 'swaylock --grace 5' \
 	timeout 480 'swaymsg "output * power off"' \
 	timeout 600 'systemctl suspend-then-hibernate' \
 	resume 'swaymsg "output * power on"' \
