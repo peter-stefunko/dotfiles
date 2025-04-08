@@ -102,21 +102,21 @@
     },
 
     "custom/consumption": {
-        "exec": "~/.config/waybar/scripts/consumption.sh",
+        "exec": "~/.config/waybar/scripts/consumption",
         "format": " {} |",
         "interval": 3,
 	"tooltip": false,
     },
 
     "custom/mouse_bat": {
-	"exec": "~/.config/waybar/scripts/mouse_bat.sh",
+	"exec": "~/.config/waybar/scripts/mouse_bat",
 	"format": "{} | ",
 	"interval": 1,
 	"tooltip": false,
     },
 
     "custom/peripherals": {
-        "exec": "~/.config/waybar/scripts/peripherals.sh",
+        "exec": "~/.config/waybar/scripts/peripherals",
         "format": "{} | ",
         "interval": 1,
 	"tooltip": false,
@@ -128,41 +128,41 @@
     },
 
     "custom/spotify": {
-	"exec": "~/.config/waybar/scripts/spotify.sh",
+	"exec": "~/.config/waybar/scripts/spotify",
 	"interval": 1,
 	"tooltip": false,
     },
 
     "custom/vpn": {
-	"exec": "~/.config/waybar/scripts/vpn.sh",
+	"exec": "~/.config/waybar/scripts/vpn",
 	"format": "{} ",
 	"interval": 1,
 	"tooltip": false,
     },
 
     "custom/time_center": {
-	"exec": "~/.config/waybar/scripts/time_center.sh",
+	"exec": "~/.config/waybar/scripts/time_center",
 	"format": "󱑂 {} | ",
 	"interval": 1,
 	"tooltip": false,
     },
 
     "custom/date_center": {
-	"exec": "~/.config/waybar/scripts/date_center.sh",
+	"exec": "~/.config/waybar/scripts/date_center",
 	"format": " {}",
 	"interval": 1,
 	"tooltip": false,
     },
 
     "custom/time_right": {
-	"exec": "~/.config/waybar/scripts/time_right.sh",
+	"exec": "~/.config/waybar/scripts/time_right",
 	"format": "| 󱑂 {} | ",
 	"interval": 1,
 	"tooltip": false,
     },
 
     "custom/date_right": {
-	"exec": "~/.config/waybar/scripts/date_right.sh",
+	"exec": "~/.config/waybar/scripts/date_right",
 	"format": " {} ",
 	"interval": 1,
 	"tooltip": false,
