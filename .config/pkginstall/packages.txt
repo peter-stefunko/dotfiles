@@ -66,6 +66,7 @@ cairo
 cairomm
 cairomm-1.16
 cantarell-fonts
+capstone
 cblas
 check
 chromium
@@ -105,7 +106,7 @@ dhclient
 diffutils
 discord
 docker
-docker-compose
+docker-desktop
 dotnet-host
 dotnet-runtime
 dotnet-runtime-8.0
@@ -115,8 +116,10 @@ dotnet-targeting-pack
 dotnet-targeting-pack-8.0
 double-conversion
 doxygen
+dtc
 duktape
 e2fsprogs
+edk2-ovmf
 efibootmgr
 efivar
 ell
@@ -448,6 +451,7 @@ i7z
 iana-etc
 icu
 imv
+iniparser
 intel-ucode
 iproute2
 iptables
@@ -557,6 +561,7 @@ lib32-zlib
 lib32-zstd
 libabw
 libadwaita
+libaio
 libappindicator-gtk3
 libarchive
 libasound2-plugin-fftrate
@@ -719,6 +724,7 @@ libsecret
 libsigc++
 libsigc++-3.0
 libsixel
+libslirp
 libsm
 libsndfile
 libsodium
@@ -739,10 +745,13 @@ libtiff
 libtirpc
 libtommath
 libtool
+libtraceevent
+libtracefs
 libunibreak
 libunistring
 libunwind
 libupnp
+liburing
 libusb
 libusbmuxd
 libutempter
@@ -775,6 +784,7 @@ libxcursor
 libxcvt
 libxdamage
 libxdmcp
+libxdp
 libxext
 libxfixes
 libxfont2
@@ -847,6 +857,7 @@ mujs
 mupdf
 nano
 ncurses
+ndctl
 neon
 neovim
 netstandard-targeting-pack
@@ -886,6 +897,7 @@ pandoc-cli
 pango
 pangomm
 pangomm-2.48
+pass
 passim
 patch
 pavucontrol
@@ -940,6 +952,11 @@ python-requests
 python-six
 python-urllib3
 python-xlib
+qemu-base
+qemu-common
+qemu-img
+qemu-system-x86
+qemu-system-x86-firmware
 qpdf
 qt5-base
 qt5-svg
@@ -972,6 +989,7 @@ rustup
 sbc
 sdl2-compat
 sdl3
+seabios
 seatd
 sed
 serd
@@ -992,7 +1010,6 @@ spdlog
 speex
 speexdsp
 spicetify-cli
-spicetify-cli-debug
 spicetify-marketplace-bin
 spirv-tools
 spotify
@@ -1052,7 +1069,9 @@ v4l-utils
 valgrind
 vamp-plugin-sdk
 vapoursynth
+vde2
 vid.stab
+virtiofsd
 visual-studio-code-bin
 vivaldi
 vivaldi-ffmpeg-codecs
@@ -1063,6 +1082,7 @@ vmaf
 vulkan-headers
 vulkan-icd-loader
 vulkan-intel
+w3m
 waybar
 wayland
 wayland-protocols
@@ -1078,7 +1098,9 @@ wl-clipboard
 wlr-randr
 wlrobs
 wlroots
+wmctrl
 wofi
+wolfssl
 wpa_supplicant
 wxwidgets-common
 wxwidgets-gtk3
@@ -1126,7 +1148,6 @@ xxhash
 xz
 yajl
 yay
-yay-debug
 ydotool
 yyjson
 zenity
