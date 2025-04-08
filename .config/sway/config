@@ -33,7 +33,9 @@
 
 # Alt-Tab:
     bindsym $mod+Tab exec $alttab window next
+    bindsym $mod+shift+Tab exec $alttab window prev
     bindsym $mod+grave exec $alttab workspace next
+    bindsym $mod+shift+grave exec $alttab workspace prev
 
 # Mic:
     bindsym XF86AudioMicMute exec amixer set Capture toggle
@@ -55,7 +57,7 @@
 
 # Rofi:
     bindsym $mod+slash exec rofi -show run -run-command "$term -e sh -c {cmd}"
-    bindsym $mod+shift+Tab exec rofi -show window
+    bindsym $mod+period exec rofi -show window
 
 # Select network:
     bindsym $mod+n exec nmcli-rofi.sh
