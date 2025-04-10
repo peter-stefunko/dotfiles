@@ -56,6 +56,13 @@ window#waybar
     background-color: #EBDBB2;
 }
 
+#workspaces button.focused label
+{
+    color: #282828;
+    background-color: #EBDBB2;
+}
+
+
 #workspaces button.urgent
 {
     color: #282828;
