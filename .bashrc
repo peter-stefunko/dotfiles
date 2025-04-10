@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Don't close shell on ctrl+d
+set -o ignoreeof
+
 # Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
