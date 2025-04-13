@@ -1,5 +1,6 @@
 1password
 a52dec
+aalib
 abseil-cpp
 acl
 acpi
@@ -58,6 +59,7 @@ bluez-libs
 bluez-obex
 bluez-utils
 boost-libs
+bridge-utils
 brightnessctl
 brotli
 bzip2
@@ -74,6 +76,7 @@ cblas
 cdparanoia
 check
 chromium
+cifs-utils
 clang
 clion
 clion-cmake
@@ -86,6 +89,7 @@ compiler-rt
 confuse
 containerd
 coreutils
+cpio
 cppdap
 cryptsetup
 cups
@@ -109,6 +113,7 @@ device-mapper
 dhclient
 diffutils
 discord
+dnsmasq
 docker
 docker-desktop
 dotnet-host
@@ -133,6 +138,7 @@ faad2
 fakeroot
 fastfetch
 fcft
+feh
 ffmpeg
 ffmpeg4.4
 fftw
@@ -143,6 +149,7 @@ firefox
 flac
 flashrom
 flex
+fltk
 fluidsynth
 fmt
 fontconfig
@@ -210,12 +217,14 @@ gssdp
 gst-plugins-bad-libs
 gst-plugins-base
 gst-plugins-base-libs
+gst-plugins-good
 gstreamer
 gtest
 gtk-chtheme
 gtk-engine-murrine
 gtk-layer-shell
 gtk-update-icon-cache
+gtk-vnc
 gtk2
 gtk3
 gtk3-demos
@@ -223,6 +232,7 @@ gtk4
 gtk4-demos
 gtkmm-4.0
 gtkmm3
+gtksourceview4
 gts
 guile
 gumbo-parser
@@ -283,7 +293,6 @@ haskell-crypton-x509
 haskell-crypton-x509-store
 haskell-crypton-x509-system
 haskell-crypton-x509-validation
-haskell-data-array-byte
 haskell-data-default
 haskell-data-default-class
 haskell-data-default-instances-containers
@@ -304,7 +313,6 @@ haskell-fast-logger
 haskell-file-embed
 haskell-foldable1-classes-compat
 haskell-generically
-haskell-ghc-bignum-orphans
 haskell-glob
 haskell-gridtables
 haskell-haddock-library
@@ -473,6 +481,7 @@ iana-etc
 icu
 ijs
 imath
+imlib2
 imv
 iniparser
 intel-ucode
@@ -499,11 +508,13 @@ kbd
 keychain
 keyutils
 kmod
+kodi
 krb5
 l-smash
 lame
 lapack
 lcms2
+ldb
 leancrypto
 leptonica
 less
@@ -602,6 +613,9 @@ libbluray
 libbpf
 libbs2b
 libbsd
+libburn
+libcaca
+libcacard
 libcanberra
 libcap
 libcap-ng
@@ -609,6 +623,7 @@ libcbor
 libcdio
 libcdio-paranoia
 libcdr
+libcec
 libcloudproviders
 libcmis
 libcolord
@@ -628,6 +643,7 @@ libdeflate
 libdisplay-info
 libdovi
 libdrm
+libdv
 libdvbpsi
 libdvdnav
 libdvdread
@@ -655,6 +671,7 @@ libgcrypt
 libgirepository
 libgit2
 libglvnd
+libgovirt
 libgpg-error
 libgudev
 libheif
@@ -663,12 +680,15 @@ libice
 libidn
 libidn2
 libiec61883
+libimagequant
 libimobiledevice
 libimobiledevice-glue
 libinih
 libinput
 libinstpatch
 libisl
+libisoburn
+libisofs
 libixion
 libjcat
 libjpeg-turbo
@@ -703,11 +723,13 @@ libmspub
 libmupdf
 libmwaw
 libmysofa
+libnbd
 libndp
 libnet
 libnetfilter_conntrack
 libnewt
 libnfnetlink
+libnfs
 libnftnl
 libnghttp2
 libnghttp3
@@ -723,6 +745,7 @@ libodfgen
 libogg
 libopenmpt
 liborcus
+libosinfo
 libp11-kit
 libpagemaker
 libpaper
@@ -741,9 +764,11 @@ libpulse
 libqmi
 libqrtr-glib
 libqxp
+libraqm
 libraw
 libraw1394
 libreoffice-fresh
+librest
 librevenge
 librsvg
 libsamplerate
@@ -751,6 +776,7 @@ libsasl
 libsass
 libseccomp
 libsecret
+libshout
 libsigc++
 libsigc++-3.0
 libsixel
@@ -783,6 +809,7 @@ libunwind
 libupnp
 liburing
 libusb
+libusb-compat
 libusbmuxd
 libutempter
 libutf8proc
@@ -790,6 +817,9 @@ libuv
 libva
 libvdpau
 libverto
+libvirt
+libvirt-glib
+libvirt-python
 libvisio
 libvlc
 libvorbis
@@ -797,6 +827,7 @@ libvpl
 libvpx
 libvterm
 libwacom
+libwbclient
 libwebp
 libwebsockets
 libwireplumber
@@ -849,6 +880,7 @@ linux-api-headers
 linux-firmware
 linux-firmware-whence
 linux-lts
+lirc
 lldb
 llhttp
 llvm-libs
@@ -871,6 +903,7 @@ mailcap
 make
 man-db
 man-pages
+mariadb-libs
 mbedtls
 md4c
 mesa
@@ -898,6 +931,7 @@ nettle
 network-manager-applet
 networkmanager
 networkmanager-openvpn
+nftables
 ninja
 nm-connection-editor
 nomacs
@@ -925,7 +959,9 @@ openvpn
 opus
 orc
 os-prober
+osinfo-db
 p11-kit
+p8-platform
 pacman
 pacman-mirrorlist
 pam
@@ -934,6 +970,7 @@ pandoc-cli
 pango
 pangomm
 pangomm-2.48
+parted
 pass
 passim
 patch
@@ -946,6 +983,7 @@ perl
 perl-error
 perl-mailtools
 perl-timedate
+phodav
 pinentry
 pipewire
 pipewire-alsa
@@ -986,11 +1024,14 @@ python-mypy_extensions
 python-numpy
 python-orjson
 python-packaging
+python-pillow
 python-pyalsaaudio
+python-pycryptodomex
 python-pyqt5
 python-pyqt5-sip
 python-pysocks
 python-requests
+python-simplejson
 python-six
 python-typing_extensions
 python-urllib3
@@ -1016,7 +1057,6 @@ qt6-multimedia
 qt6-multimedia-ffmpeg
 qt6-shadertools
 qt6-svg
-qt6-tools
 qt6-translations
 qt6-wayland
 qt6ct
@@ -1058,6 +1098,7 @@ signal-desktop
 slang
 slurp
 smartmontools
+smbclient
 snappy
 sndio
 sof-firmware
@@ -1069,6 +1110,8 @@ spdlog
 speedcrunch
 speex
 speexdsp
+spice-gtk
+spice-protocol
 spicetify-cli
 spicetify-marketplace-bin
 spirv-tools
@@ -1092,14 +1135,19 @@ systemd
 systemd-libs
 systemd-sysvcompat
 taglib
+talloc
 tar
 tcl
 tdb
 tesseract
 tesseract-data-afr
 tesseract-data-osd
+tevent
 texinfo
+tigervnc
 tinysparql
+tinyxml
+tinyxml2
 tk
 tlp
 tor
@@ -1116,11 +1164,13 @@ tree-sitter-vimdoc
 tslib
 ttf-jetbrains-mono-nerd
 ttf-liberation
+twolame
 tzdata
 uchardet
 unibilium
 unzip
 upower
+usbredir
 usbutils
 uthash
 util-linux
@@ -1132,6 +1182,9 @@ vapoursynth
 vde2
 verdict
 vid.stab
+virt-install
+virt-manager
+virt-viewer
 virtiofsd
 visual-studio-code-bin
 vivaldi
@@ -1140,11 +1193,15 @@ vivaldi-update-ffmpeg-hook
 vivaldi-widevine
 vlc
 vmaf
+vte-common
+vte3
 vulkan-icd-loader
 vulkan-intel
+wavpack
 waybar
 wayland
 wayland-protocols
+waylandpp
 webrtc-audio-processing-1
 wev
 wget
@@ -1201,6 +1258,7 @@ xorg-xprop
 xorg-xrandr
 xorg-xrdb
 xorg-xset
+xorg-xsetroot
 xorg-xwayland
 xorgproto
 xterm
