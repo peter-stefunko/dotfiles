@@ -1,30 +1,5 @@
 #!/bin/bash
 
-# Prompt to create a new user
-read -rp "Do you want to create a new user? [y/N]: " create_user
-if [[ "$create_user" =~ ^[Yy]$ ]]; then
-    read -rp "Username: " username
-    while [[ -z "$username" ]]; do
-        read -rp "Username cannot be empty. Enter username: " username
-    done
-
-    read -s -rp "Password: " pwd
-    echo
-    read -s -rp "Confirm password: " pwd_confirm
-    echo
-
-    if [[ "$pwd" != "$pwd_confirm" ]]; then
-        echo "Passwords do not match. Aborting user creation."
-        exit 1
-    fi
-
-    echo "Creating user '$username'..."
-    sudo useradd -m -s /bin/bash "$username"
-    echo "$username:$pwd" | sudo chpasswd
-    echo "User '$username' created."
-    su "$username"
-fi
-
 logfile="$HOME/init.log"
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a "$logfile"
