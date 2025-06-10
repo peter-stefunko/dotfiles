@@ -74,3 +74,9 @@ window#waybar
     color: #282828;
     padding-left: 85px;
 }
+
+#custom-resize-mode {
+    background-color: #EBDBB2;
+    color: #282828;
+    padding: 0px 10px;
+}

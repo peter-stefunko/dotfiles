@@ -16,6 +16,8 @@
 # Custom scripts
     set $scripts ~/.config/sway/scripts
     set $alttab $scripts/alttab
+    set $swaylock-inhibit $scripts/swaylock-inhibit
+    set $sc-text $scripts/ocr-screen
 
 # Launcher
     set $menu rofi -show drun
@@ -26,7 +28,7 @@
 # Screenshots
     set $scs ~/Pictures/screenshots
     set $sc_format $(date +%Y-%m-%d_%H-%M-%S)
-    set $sc $scs/$sc_format
+    set $sc $scs/$sc_format.png
 
 # Terminal
     set $term foot
@@ -38,13 +40,14 @@
     bindsym $mod+shift+Tab exec $alttab window prev
     bindsym $mod+grave exec $alttab workspace next
     bindsym $mod+shift+grave exec $alttab workspace prev
+    bindsym Mod1+Tab exec swayr switch-to-urgent-or-lru-window
 
 # Bluetooth manager
     bindsym $mod+comma exec $term -e sh -c "bluetuith"
 
 # Brightness
-    bindsym XF86MonBrightnessUp exec brightnessctl -d intel_backlight set +5%
-    bindsym XF86MonBrightnessDown exec brightnessctl -d intel_backlight set 5%-
+    bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
 # Calculator
     bindsym XF86Calculator exec speedcrunch
@@ -79,6 +82,9 @@
     bindsym $mod+ctrl+s exec systemctl suspend-then-hibernate
     bindsym $mod+ctrl+l exec swaylock -f
 
+# Screenshot OCR
+    bindsym $mod+ctrl+Print exec $sc-text
+
 # Screenshots
     bindsym Print exec grim $sc
     bindsym ctrl+Print exec grimshot save area $sc
@@ -91,34 +97,35 @@
 
 
 ### Assign workspaces
-# 1
+# 1:  
 assign [app_id="foot"] workspace 1
 
-# 2
+# 2:  
 assign [class="Chromium"] workspace 2
 assign [app_id="firefox-esr"] workspace 2
 assign [class="Vivaldi-stable"] workspace 2
 
-# 3
+# 3:  
 assign [class="Code"] workspace 3
 assign [class="jetbrains-*"] workspace 3
 assign [class="rstudio"] workspace 3
 
-# 4
+# 4:  
 assign [class="Spotify"] workspace 4
 
-# 5
-assign [class="discord"] workspace 5
-assign [class="Signal*"] workspace 5
+# 5: 󱔗 
+assign [class="MuPDF"] workspace 5
+assign [app_id="sioyek"] workspace 5
+assign [app_id="libreoffice*"] workspace 5
 
-# 6
-assign [class="MuPDF"] workspace 6
-assign [app_id="libreoffice*"] workspace 6
+# 6:  
+assign [class="discord"] workspace 6
+assign [class="Signal*"] workspace 6
 
-# 7
+# 7:  
 assign [class="steam"] workspace 7
 
-# 8
+# 8:  
 assign [class="1Password"] workspace 8
 
 
@@ -131,7 +138,7 @@ output * bg ~/.local/share/wallpapers/background.png fill
 
 ### Idle configuration
 exec swayidle -w \
-	timeout 480 '$scripts/swaylock-inhibit' \
+	timeout 480 $swaylock-inhibit \
 	timeout 600 'systemctl suspend-then-hibernate' \
 	before-sleep 'swaylock -f'
 
@@ -292,13 +299,36 @@ bindsym $mod+r mode "resize"
 
 
 ### Theme
+## Gruvbox
 # Colors
-set $border #1d2021
-set $focused_border #ebdbb2
-set $text #1d2021
-set $focused_text #ebdbb2
-set $urgent #b16286
-set $warning #d79921
+set $white #ebdbb2
+set $black #1d2021
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $cyan #689d6a
+set $gray #928374
+set $orange #d65d0e
+
+set $white-bright #fbf1c7
+set $black-bright #282828
+set $red-bright #fb4934
+set $green-bright #b8bb26
+set $yellow-bright #fabd2f
+set $blue-bright #83a598
+set $purple-bright #d3869b
+set $cyan-bright #8ec07c
+set $gray-bright #a89984
+set $orange-bright #fe8019
+
+set $border $black
+set $focused_border $white
+set $text $black
+set $focused_text $white
+set $urgent $purple
+set $warning $yellow
 
 # Focus
 focus_on_window_activation focus
@@ -321,12 +351,10 @@ client.focused_inactive $border $border $text $border
 
 
 ### Autostart
-# Always
-exec_always eval "$(keychain --quiet --eval ~/.ssh/aisa_fi)"
-
 # Utils
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-clip-persist -c both
+exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
 
 # Sound
 exec amixer set Capture toggle

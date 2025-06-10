@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+con_ids=$(swaymsg -t get_tree | jq -r '.. | try select(.fullscreen_mode == 1) | .id')
+
+for con_id in $con_ids; do
+	swaymsg "[con_id=$con_id]" inhibit_idle none
+done
+
+exec swaylock -f --fade-in 2 --grace 5
+
+for con_id in $con_ids; do
+	swaymsg "[con_id=$con_id]" inhibit_idle fullscreen
+done

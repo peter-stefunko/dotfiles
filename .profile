@@ -8,3 +8,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export QT_QPA_PLATFORMTHEME=qt6ct
 export BATH_THEME=gruvbox-dark
+
+
+# Added by Toolbox App
+export PATH="$PATH:/home/peter/.local/share/JetBrains/Toolbox/scripts"
+

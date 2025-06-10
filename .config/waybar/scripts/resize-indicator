@@ -1,0 +1,10 @@
+#!/bin/bash
+
+swaymsg -t get_inputs > /dev/null 2>&1  # ensure swaymsg is responsive
+
+# Monitor mode events from sway
+swaymsg -t subscribe '[ "mode" ]' | while read -r line; do
+    if echo "$line" | grep -q '"change": "resize"'; then
+        echo resize
+    fi
+done
