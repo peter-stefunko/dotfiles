@@ -116,7 +116,7 @@ export PS1="\
 \[\e[48;5;15;38;5;242;1m\] \W \[\e[0m\]\
 $git_yes_sep\
 \[\e[48;5;173;38;5;255;1m\] \$(getBranch) \[\e[0m\]\\
-$git_end_sep "
+$git_end_sep \[\e[1;38;5;137m\]"
 
 export PS1="\n$PS1"
 
