@@ -31,7 +31,7 @@
     set $sc $scs/$sc_format.png
 
 # Terminal
-    set $term foot
+    set $term wezterm
 
 
 ### Custom keybinds
@@ -99,6 +99,8 @@
 ### Assign workspaces
 # 1:  
 assign [app_id="foot"] workspace 1
+assign [app_id="org.wezfurlong.wezterm"] workspace 1
+assign [app_id="com.mitchellh.ghostty"] workspace 1
 
 # 2:  
 assign [class="Chromium"] workspace 2
@@ -122,11 +124,14 @@ assign [app_id="libreoffice*"] workspace 5
 assign [class="discord"] workspace 6
 assign [class="Signal*"] workspace 6
 
-# 7:  
-assign [class="steam"] workspace 7
+# 7:  
+assign [class="NoiseTorch"] workspace 7
 
 # 8:  
 assign [class="1Password"] workspace 8
+
+# 9:  
+assign [class="steam"] workspace 9
 
 
 ### Output configuration
