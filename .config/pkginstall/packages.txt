@@ -28,7 +28,6 @@ alsa-utils
 aom
 apng-utils
 apostrophe
-apparmor
 appstream
 archlinux-keyring
 ardour
@@ -112,7 +111,6 @@ dbus-broker-units
 dbus-glib
 dbus-units
 dconf
-debootstrap
 debugedit
 debuginfod
 default-cursors
@@ -135,6 +133,7 @@ dotnet-host
 dotnet-runtime
 dotnet-runtime-8.0
 dotnet-sdk-8.0
+dotnet-targeting-pack
 dotnet-targeting-pack-8.0
 double-conversion
 doxygen
@@ -146,7 +145,6 @@ ed
 edk2-ovmf
 efibootmgr
 efivar
-electron35
 ell
 enchant
 exempi
@@ -167,11 +165,11 @@ fftw
 file
 filesystem
 findutils
-firefox
 flac
 flashrom
 flex
 fltk
+fltk1.3
 fluidsynth
 flyctl
 fmt
@@ -181,6 +179,7 @@ foot
 freeglut
 freetype2
 fribidi
+fstrm
 fuse-common
 fuse2
 fuse3
@@ -191,6 +190,7 @@ gc
 gcc
 gcc-fortran
 gcc-libs
+gcc14-libs
 gcr
 gcr-4
 gd
@@ -242,7 +242,6 @@ greetd-agreety
 greetd-tuigreet
 grep
 grim
-grimshot-bin-sway
 groff
 grub
 gsettings-desktop-schemas
@@ -280,13 +279,13 @@ gupnp-dlna
 gupnp-igd
 gvfs
 gzip
+hakuneko-desktop-bin
 harfbuzz
 harfbuzz-icu
 haskell-aeson
 haskell-aeson-pretty
 haskell-ansi-terminal
 haskell-ansi-terminal-types
-haskell-ansi-wl-pprint
 haskell-appar
 haskell-asn1-encoding
 haskell-asn1-parse
@@ -315,6 +314,7 @@ haskell-byteorder
 haskell-call-stack
 haskell-case-insensitive
 haskell-cassava
+haskell-cborg
 haskell-cereal
 haskell-citeproc
 haskell-cmdargs
@@ -357,6 +357,7 @@ haskell-generically
 haskell-glob
 haskell-gridtables
 haskell-haddock-library
+haskell-half
 haskell-hashable
 haskell-hourglass
 haskell-hslua
@@ -385,6 +386,7 @@ haskell-http2
 haskell-hunit
 haskell-indexed-traversable
 haskell-indexed-traversable-instances
+haskell-integer-conversion
 haskell-integer-logarithms
 haskell-iproute
 haskell-ipynb
@@ -418,6 +420,8 @@ haskell-pandoc-types
 haskell-pem
 haskell-pretty-show
 haskell-prettyprinter
+haskell-prettyprinter-ansi-terminal
+haskell-prettyprinter-compat-ansi-wl-pprint
 haskell-primitive
 haskell-psqueues
 haskell-quickcheck
@@ -431,6 +435,7 @@ haskell-safe-exceptions
 haskell-scientific
 haskell-semialign
 haskell-semigroupoids
+haskell-serialise
 haskell-servant
 haskell-servant-server
 haskell-sha
@@ -458,6 +463,7 @@ haskell-temporary
 haskell-texmath
 haskell-text-conversions
 haskell-text-icu
+haskell-text-iso8601
 haskell-text-short
 haskell-th-abstraction
 haskell-th-compat
@@ -507,11 +513,11 @@ hdparm
 hicolor-icon-theme
 hidapi
 highway
+hiredis
 hivex
 hslua-cli
 htop
 hunspell
-hunspell-en_us
 hwdata
 hwloc
 hyphen
@@ -525,6 +531,7 @@ icu
 ijs
 imagemagick
 imath
+img2pdf
 imlib2
 imv
 informant
@@ -545,6 +552,7 @@ java-runtime-common
 jbig2dec
 jbigkit
 jdk-openjdk
+jdk11-openjdk
 jemalloc
 jetbrains-toolbox
 jfsutils
@@ -602,6 +610,7 @@ lame
 lapack
 lcms2
 ldb
+ldns
 leancrypto
 leptonica
 less
@@ -1059,7 +1068,6 @@ lzo
 lzop
 m4
 magickcache-git
-mailcap
 maim
 make
 man-db
@@ -1078,6 +1086,7 @@ mkinitcpio-busybox
 mobile-broadband-provider-info
 modemmanager
 modemmanager-qt
+monero
 mono
 mpdecimal
 mpfr
@@ -1087,7 +1096,6 @@ msgpack-c
 mtdev
 mtools
 mujs
-multipath-tools
 mupdf
 mypy
 nano
@@ -1104,6 +1112,7 @@ nettle
 network-manager-applet
 networkmanager
 networkmanager-openvpn
+networkmanager-vpn-plugin-openvpn
 nftables
 nilfs-utils
 ninja
@@ -1133,6 +1142,7 @@ openbsd-netcat
 opencore-amr
 opencv
 openexr
+openh264
 openjpeg2
 openssh
 openssl
@@ -1168,15 +1178,34 @@ pcre
 pcre2
 pcsclite
 perl
+perl-clone
+perl-encode-locale
 perl-error
 perl-file-homedir
+perl-file-listing
 perl-file-which
+perl-html-parser
+perl-html-tagset
+perl-http-cookiejar
+perl-http-cookies
+perl-http-daemon
+perl-http-date
+perl-http-message
+perl-http-negotiate
 perl-image-exiftool
+perl-io-html
 perl-ipc-system-simple
 perl-libintl-perl
+perl-libwww
+perl-lwp-mediatypes
 perl-mailtools
+perl-net-http
 perl-timedate
 perl-tk
+perl-try-tiny
+perl-uri
+perl-www-robotrules
+perl-xml-parser
 perl-yaml-tiny
 phodav
 phonon-qt6
@@ -1238,11 +1267,11 @@ python-chardet
 python-charset-normalizer
 python-click
 python-colorama
-python-coverage
 python-cryptography
 python-cssselect
 python-dateutil
 python-dbus
+python-deprecated
 python-docopt
 python-et-xmlfile
 python-feedparser
@@ -1261,7 +1290,6 @@ python-itsdangerous
 python-jinja
 python-kaitaistruct
 python-ldap3
-python-legacy-cgi
 python-lockfile
 python-lxml
 python-markupsafe
@@ -1275,6 +1303,7 @@ python-packaging
 python-pandas
 python-passlib
 python-pathspec
+python-pikepdf
 python-pillow
 python-pip
 python-psutil
@@ -1297,6 +1326,7 @@ python-pyqt5-sip
 python-pyserial
 python-pysocks
 python-pytz
+python-regex
 python-requests
 python-requests-futures
 python-ruamel-yaml
@@ -1318,6 +1348,7 @@ python-wcwidth
 python-webencodings
 python-werkzeug
 python-wheel
+python-wrapt
 python-wsproto
 python-xlib
 python-zstandard
@@ -1409,7 +1440,6 @@ slop
 slurp
 smartmontools
 smbclient
-snapd
 snappy
 sndio
 sof-firmware
@@ -1417,7 +1447,6 @@ solid
 sonnet
 sord
 sound-theme-freedesktop
-soundcloud-rpc-bin
 source-highlight
 spandsp
 spdlog
@@ -1524,6 +1553,7 @@ uchardet
 udftools
 udisks2
 ufrii-print
+unbound
 unibilium
 unzip
 upower
@@ -1555,6 +1585,7 @@ vlc-cli
 vlc-gui-qt
 vlc-plugin-a52dec
 vlc-plugin-alsa
+vlc-plugin-archive
 vlc-plugin-dav1d
 vlc-plugin-dbus
 vlc-plugin-dbus-screensaver
@@ -1566,6 +1597,7 @@ vlc-plugin-journal
 vlc-plugin-jpeg
 vlc-plugin-lua
 vlc-plugin-mpg123
+vlc-plugin-ogg
 vlc-plugin-opus
 vlc-plugin-png
 vlc-plugin-pulse
@@ -1600,6 +1632,9 @@ wezterm
 wget
 which
 whois
+wine
+wine-gecko
+wine-mono
 wireless_tools
 wireplumber
 wireshark-cli
@@ -1670,6 +1705,7 @@ yara
 yay
 ydotool
 yyjson
+zabbix-common
 zenity
 zeromq
 zimg
