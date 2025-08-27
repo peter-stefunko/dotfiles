@@ -67,33 +67,34 @@ EOF
 fix_title() {
 	local title="$1"
 
-	title="${title,,}"
+	local title="${title,,}"
 	local temp="${title//-/ }"
-	local result=$(for word in $temp; do echo -n "${word^}-"; done)
+	local result
+	result=$(for word in $temp; do echo -n "${word^}-"; done)
 	echo "${result%-}"
 }
 
 
 make_decimal() {
-	num="$1"
+	local num="$1"
 
 	printf "%.1f" "$num"
 }
 
 is_integer() {
-	num="$1"
+	local num="$1"
 
 	[[ "$num" =~ ^-?[0-9]+$ ]]
 }
 
 is_decimal() {
-	num="$1"
+	local num="$1"
 
 	[[ "$num" =~ ^-?[0-9]*\.[0-9]+$ ]]
 }
 
 is_number() {
-	num="$1"
+	local num="$1"
 
 	is_integer "$num" || is_decimal "$num"
 }
@@ -109,13 +110,12 @@ split_number() {
 }
 
 get_image_name() {
-	local chapter="$1"
-	local page="$2"
+	local chapter="$1" page="$2"
 
-	local chapter_split="$(split_number $chapter)"
-	local chapter_trunc chapter_decimal
-	IFS=';' read -r chapter_trunc chapter_decimal <<< "$chapter_split"
-	printf "%04d%s-%03d.png" "$chapter_trunc" "$chapter_decimal" "$page"
+	local ch_trunc ch_decimal ch_split
+	ch_split="$(split_number "$chapter")"
+	IFS=';' read -r ch_trunc ch_decimal <<< "$ch_split"
+	printf "%04d%s-%03d.png" "$ch_trunc" "$ch_decimal" "$page"
 }
 
 get_new_host() {
@@ -130,7 +130,7 @@ get_new_host() {
 	local found=0
 	for host in "${hosts[@]}"; do
 		url="$host/manga/$title"
-		if $(curl -s --head --fail "$url/$image" > /dev/null); then
+		if curl -s --head --fail "$url/$image" > /dev/null; then
 			found=1
 			break
 		fi
@@ -187,7 +187,7 @@ done
 
 help_short="Please refer to manga-dl -h for help"
 
-while getopts "o:O:knsh" opt; do
+while getopts "o:O:s:T:f:t:c:knih" opt; do
 	case "$opt" in
 		o) output_pdf="$OPTARG" ;;
 		O) output_dir="$OPTARG" ;;
@@ -256,14 +256,14 @@ elif [[ -z "$to" ]]; then
 	to=9999
 fi
 
-is_number "$from" && is_number "$to" || { echo "Error: FROM_CHAPTER and/or TO_CHAPTER must be integers or decimals. $help_short"; exit 1; }
+{ is_number "$from" && is_number "$to"; } || { echo "Error: FROM_CHAPTER and/or TO_CHAPTER must be integers or decimals. $help_short"; exit 1; }
 if (( $(echo "$from > $to" | bc -l) )); then
     echo "Error: FROM_CHAPTER cannot be greater than TO_CHAPTER."
     exit 1
 fi
 
-from="$(make_decimal $from)"
-to="$(make_decimal $to)"
+from="$(make_decimal "$from")"
+to="$(make_decimal "$to")"
 
 [[ -n "$output_pdf" ]] || output_pdf="$title.pdf"
 [[ "$output_pdf" == *.pdf ]] || output_pdf="$output_pdf.pdf"
@@ -279,7 +279,7 @@ echo "From:  $from"
 echo -e "To:    $to\n"
 
 echo "Finding host..."
-get_new_host "$(get_image_name $from 1)" || { echo "Error: No host was found. Try both JP and EN titles of the series and make sure the entered staring chapter exists for the series"; exit 1; }
+get_new_host "$(get_image_name "$from" 1)" || { echo "Error: No host was found. Try both JP and EN titles of the series and make sure the entered staring chapter exists for the series"; exit 1; }
 
 pages_downloaded=0
 chapters_downloaded=0
@@ -287,13 +287,13 @@ reset="                                                          "
 
 echo -e "Downloading chapters...\n\n"
 for chapter in $(seq "$from" "$step" "$to"); do
-	chapter_split=$(split_number "$chapter")
+	chapter_split="$(split_number "$chapter")"
 	chapter_pretty="${chapter_split//;/}"
 	page=1
 
 	while :; do
 		update_progress "$chapter_pretty" "$page" "$chapters_downloaded" "$pages_downloaded"
-		image="$(get_image_name $chapter $page)"
+		image="$(get_image_name "$chapter" "$page")"
 
 		if [[ ! -f "$images_dir/$image" ]]; then
 		    if ! download_image "$image"; then
@@ -310,7 +310,7 @@ for chapter in $(seq "$from" "$step" "$to"); do
 	done
 
 	[[ "$page" -gt 1 ]] && ((chapters_downloaded++))
-	[[ "$chapter == $to" ]] && update_progress "$chapter" "$page" "$chapters_downloaded" "$pages_downloaded"
+	[[ "$chapter" == "$to" ]] && update_progress "$chapter" "$page" "$chapters_downloaded" "$pages_downloaded"
 done
 
 img_dl_info="Images are preserved in $images_dir"
@@ -320,7 +320,7 @@ if "$no_pdf"; then
 	echo "Images downloaded to $images_dir"
 elif img2pdf "$images_dir"/* -o "$output_pdf"; then
 	echo "PDF created: $output_pdf"
-	"$keep_images" && echo "$img_dl_info" || rm -rf "$images_dir"
+	{ "$keep_images" && echo "$img_dl_info"; } || rm -rf "$images_dir"
 else
 	echo -e "Error: Failed to create PDF.\n$img_dl_info"
 	exit 1
