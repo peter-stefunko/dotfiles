@@ -43,7 +43,7 @@ yay-autoremove() {
 
 yayr() {
   [ -z "$1" ] && echo "Enter package name" && return
-  yay -Rns $(yay -Qq | grep "^$1")
+  yay -Rn $(yay -Qq | grep "^$1")
 }
 
 dus() {
@@ -62,69 +62,16 @@ PS1='[\u@\h \W]\$ '
 
 eval "$(dircolors -b ~/.dircolors)"
 
-sep=""
-git_end_sep="\[\e[38;5;173m\]$sep\[\e[0m\]"
-git_yes_sep="\[\e[48;5;173;38;5;15m\]$sep\[\e[0m\]"
-git_not_sep="\[\e[38;5;15m\]$sep\[\e[0m\]"
-
-getBranch() {
-  # Only continue if we're in a Git repository
-  git rev-parse --is-inside-work-tree &>/dev/null || { echo ""; return; }
-
-  # Get branch name or short commit hash
-  ref=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
-
-  # Get status
-  git_status=$(git status --porcelain=2 --branch 2>/dev/null)
-  ab_status=$(echo "$git_status" | awk -F '^# branch.ab ' '{print $2}')
-
-  # Check for ahead/behind info
-  ahead=$(echo "$ab_status" | awk '{print $1}')
-  behind=$(echo "$ab_status" | awk '{print $2}')
-  remote_status=""
-
-  if [ "$ahead" -gt 0 ]; then
-    remote_status=" $ahead";
-  fi
-
-  if [ "$behind" -lt 0 ]; then
-    remote_status="$remote_status $behind";
-  fi
-
-  # Indicators
-  dirty=""
-  staged=""
-  untracked=""
-  echo "$git_status" | grep '^1 ' &>/dev/null && staged="+"
-  echo "$git_status" | grep '^2 ' &>/dev/null && dirty="*"
-  echo "$git_status" | grep '^? ' &>/dev/null && untracked="?"
-  status="$staged$dirty$untracked"
-
-  if [[ -n "$status" ]]; then
-    status=" $status";
-  fi
-
-  # Build full status
-  echo " $ref$remote_status$status"
-}
-
-export PS1="\
-\[\e[48;5;137;38;5;255;1m\] \u \[\e[0m\]\
-\[\e[48;5;180;38;5;137m\]$sep\[\e[0m\]\
-\[\e[48;5;180;38;5;242;1m\] \h \[\e[0m\]\
-\[\e[48;5;15;38;5;180m\]$sep\[\e[0m\]\
-\[\e[48;5;15;38;5;242;1m\] \W \[\e[0m\]\
-$git_yes_sep\
-\[\e[48;5;173;38;5;255;1m\] \$(getBranch) \[\e[0m\]\\
-$git_end_sep \[\e[1;38;5;137m\]"
-
-export PS1="\n$PS1"
+# Load custom prompt
+#if [ -f "$HOME/.config/custom-prompt.sh" ] && [[ $- == *i* ]]; then
+#    source "$HOME/.config/custom-prompt.sh"
+#fi
 
 ##-----------------------------------------------------
 ## synth-shell-prompt.sh
-#if [ -f /home/peter/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
-#	source /home/peter/.config/synth-shell/synth-shell-prompt.sh
-#fi
+if [ -f /home/peter/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/peter/.config/synth-shell/synth-shell-prompt.sh
+fi
 
 ##-----------------------------------------------------
 ## alias
