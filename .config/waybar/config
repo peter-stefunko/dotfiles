@@ -24,6 +24,7 @@
         "network",
         "sway/language",
         "custom/consumption",
+        "custom/backlight",
         "battery",
         "custom/mouse_bat",
         "custom/time_right",
@@ -98,6 +99,19 @@
             "car": "",
             "default": ["", "", " "],
         },
+	"tooltip": false,
+    },
+
+    "custom/sep": {
+	"format": " | ",
+	"interval": 0,
+	"tooltip": false,
+    },
+
+    "custom/backlight": {
+	"exec": "~/.config/waybar/scripts/backlight",
+	"format": " {} |",
+	"interval": 1,
 	"tooltip": false,
     },
 
