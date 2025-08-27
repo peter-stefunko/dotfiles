@@ -52,7 +52,7 @@ else
 	fi
 fi
 
-title_max=35
+title_max=25
 title_len=${#title}
 
 if [[ $title_len -gt $title_max ]]; then
