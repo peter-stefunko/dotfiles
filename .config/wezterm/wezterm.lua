@@ -16,8 +16,6 @@ local config = {
   color_scheme = color_scheme,
   color_schemes = color_schemes,
 
-  enable_vertical_padding=true,
-
   default_cursor_style = "BlinkingBlock",
   animation_fps = 1,
   cursor_blink_ease_in = 'Constant',
