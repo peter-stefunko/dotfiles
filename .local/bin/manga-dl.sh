@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Author: github.com/peter-stefunko
+
 #######################################
 # User Interface (Help, Output)
 #######################################
@@ -153,6 +155,8 @@ validate_and_resolve_from_chapter() {
 		echo "Error: Cannot use both --from and positional argument for FROM_CHAPTER"
 		echo "$help_short"
 		exit 1
+	elif [[ -n "$from" ]]; then
+		[[ -z "$to" ]] && to=9999
 	elif [[ -n "$from_positional" ]]; then
 		from="$from_positional"
 	elif [[ -z "$from" ]]; then
@@ -168,12 +172,10 @@ validate_and_resolve_to_chapter() {
 		echo "$help_short"
 		exit 1
 	elif [[ -n "$to" ]]; then
-		return
+		[[ -z "$from" ]] && from=1
 	elif [[ -n "$to_positional" ]]; then
 		to="$to_positional"
-	elif [[ -n "$from" ]]; then
-		to="$from"
-	else
+	elif [[ -z "$to" ]]; then
 		to=9999
 	fi
 }
@@ -183,7 +185,7 @@ validate_and_resolve_chapters() {
 
 	if [[ -n "$chapters" ]]; then
 		if [[ -n "$from" || -n "$to" || -n "$from_positional" || -n "$to_positional" ]]; then
-			echo "Error: Cannot use --chapters together with --from, --to, or positional FROM/TO"
+			echo "Error: Cannot use --chapters together with --from, --to, or positional FROM/TO_CHAPTER"
 			echo "$help_short"
 			exit 1
 		fi
@@ -282,16 +284,18 @@ download_images() {
 			update_progress "$chapter_pretty" "$page" "$chapters_downloaded" "$pages_downloaded"
 			image="$(get_image_name "$chapter" "$page")"
 
-			if [[ ! -f "$images_dir/$image" ]]; then
-			    if ! download_image "$image"; then
+			if [[ ! -f "$images_dir/$image" ]] && ! download_image "$image"; then
 			        if [[ "$page" -eq 1 ]]; then
-			            if ! get_new_host "$image" || ! download_image "$image"; then
-			            	[[ "$ignore_if_fail" == true ]] && break || return 1
-			            fi
-			        else
-			            break
-			        fi
-			    fi
+					if get_new_host "$image" && download_image "$image"; then
+		        			continue
+		        		fi
+			        	if [[ "$ignore_if_fail" == true ]] || is_decimal "$chapter_pretty"; then
+			        		break
+					fi
+					return 1
+				else
+					break
+				fi
 			fi
 
 			((page++))
@@ -299,10 +303,8 @@ download_images() {
 		done
 
 		[[ "$page" -gt 1 ]] && ((chapters_downloaded++))
-		[[ "$chapter" == "$to" ]] && update_progress "$chapter" "$page" "$chapters_downloaded" "$pages_downloaded"
+		[[ "$chapter" == "$to" ]] && update_progress "$chapter_pretty" "$page" "$chapters_downloaded" "$pages_downloaded"
 	done
-
-	#echo -e "$reset"
 }
 
 process_images() {
@@ -337,7 +339,6 @@ main() {
 	help_short="Please refer to manga-dl -h for help"
 	reset="                                                          "
 
-	# Parse args
 	for arg in "$@"; do
 	    shift
 	    case "$arg" in
@@ -385,6 +386,10 @@ main() {
 	echo "Title: $title"
 	echo "From:  $(prettify_num "$from")"
 	echo -e "To:    $(prettify_num "$to")\n"
+
+	[[ "$keep_images" == true ]] && echo "Images dir: "$images_dir""
+	[[ "$no_pdf" == false ]] && echo "PDF file: "$output_pdf""
+	echo ""
 
 	find_initial_host
 	download_images
