@@ -35,7 +35,7 @@ Options:
 			Cannot be combined with --from, --to, or FROM/TO_CHAPTER arguments.
   -o, --output FILE	Custom PDF filename inside DIR. Default: TITLE.pdf
   -O, --output-dir DIR	Directory for output. Default: ~/Downloads/Manga
-  -k, --keep-images	Keep downloaded images after creating PDF.
+  -k, --keep		Keep downloaded images after creating PDF.
   -n, --no-pdf		Do not create a PDF; only download images.
   -s, --step NUMBER	Step size between chapters. Default: 0.5
   -h, --help		Show this help message and exit.
@@ -53,7 +53,7 @@ Examples:
       manga-dl.sh dorohedoro 6.5
 
   Download chapters 1 to 10, keep images, custom PDF name:
-      manga-dl.sh -k -o Oyasumi-Punpun_1-10.pdf "Oyasumi Punpun" 1 10
+      manga-dl.sh --keep -o Oyasumi-Punpun_1-10.pdf "Oyasumi Punpun" 1 10
 
   Use custom output directory:
       manga-dl.sh -O /tmp/manga Blame 1 5
@@ -62,9 +62,6 @@ Dependencies:
   curl		Required to check if images exist on the host.
   wget		Required to download individual image files.
   img2pdf	Required to convert downloaded images into a PDF file.
-
-Notes:
-  - Flags must appear **before** positional arguments (TITLE [FROM_CHAPTER] [TO_CHAPTER]).
 EOF
 }
 
@@ -170,9 +167,13 @@ validate_and_resolve_to_chapter() {
 		echo "Error: Cannot use both --to and positional argument for TO_CHAPTER"
 		echo "$help_short"
 		exit 1
+	elif [[ -n "$to" ]]; then
+		return
 	elif [[ -n "$to_positional" ]]; then
 		to="$to_positional"
-	elif [[ -z "$to" ]]; then
+	elif [[ -n "$from" ]]; then
+		to="$from"
+	else
 		to=9999
 	fi
 }
@@ -215,11 +216,11 @@ resolve_dirs() {
 	[[ "$output_pdf" == *.pdf ]] || output_pdf="$output_pdf.pdf"
 	[[ "$output_pdf" == /* ]] || output_pdf="$output_dir/$output_pdf"
 
-	[[ -d "$output_dir" ]] || mkdir -p "$output_dir"
+	local base_dir="$(dirname "$output_pdf")"
+	[[ -d "$base_dir" ]] || mkdir -p "$base_dir"
 
 	images="$(basename "$output_pdf" .pdf).images"
 	images_dir="$output_dir/$images"
-
 }
 
 #######################################
@@ -285,7 +286,7 @@ download_images() {
 			    if ! download_image "$image"; then
 			        if [[ "$page" -eq 1 ]]; then
 			            if ! get_new_host "$image" || ! download_image "$image"; then
-			            	"$ignore_if_fail" && break || return 1
+			            	[[ "$ignore_if_fail" == true ]] && break || return 1
 			            fi
 			        else
 			            break
@@ -305,11 +306,11 @@ download_images() {
 }
 
 process_images() {
-	if "$no_pdf"; then
+	if [[ "$no_pdf" == true ]]; then
 		echo "Images downloaded to $images_dir"
 	elif img2pdf "$images_dir"/*.png -o "$output_pdf"; then
 		echo "PDF created: $output_pdf"
-		{ "$keep_images" && echo "$img_dl_info"; } || rm -rf "$images_dir"
+		{ [[ "$keep_images" == true ]] && echo "$img_dl_info"; } || rm -rf "$images_dir"
 	else
 		echo -e "Error: Failed to create PDF.\n$img_dl_info"
 		exit 1
@@ -322,6 +323,7 @@ process_images() {
 
 main() {
 	output_dir="$HOME/Downloads/Manga"
+	images_dir=""
 	output_pdf=""
 	keep_images=false
 	no_pdf=false
@@ -333,7 +335,6 @@ main() {
 	ignore_if_fail=false
 
 	help_short="Please refer to manga-dl -h for help"
-	img_dl_info="Images are preserved in $images_dir"
 	reset="                                                          "
 
 	# Parse args
@@ -342,7 +343,7 @@ main() {
 	    case "$arg" in
 		--output)		set -- "$@" -o ;;
 		--output-dir)		set -- "$@" -O ;;
-		--keep-images)		set -- "$@" -k ;;
+		--keep)			set -- "$@" -k ;;
 		--no-pdf)		set -- "$@" -n ;;
 		--step)			set -- "$@" -s ;;
 		--help)			set -- "$@" -h ;;
@@ -377,6 +378,7 @@ main() {
 	validate_numeric_args
 	resolve_dirs
 
+	img_dl_info="Images are preserved in $images_dir"
 	from="$(make_decimal "$from")"
 	to="$(make_decimal "$to")"
 
