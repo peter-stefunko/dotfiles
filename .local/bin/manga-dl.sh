@@ -43,6 +43,7 @@ Options:
   -h, --help		Show this help message and exit.
   -i, --ignore-if-fail	Skip chapters that fail to download and continue with the
 			next one instead of exiting the script. Default: false
+  -l, --limit NUM	Stop downloading after successfully downloading N chapters.
 
 Examples:
   Download entire series "Oyasumi Punpun":
@@ -64,6 +65,11 @@ Dependencies:
   curl		Required to check if images exist on the host.
   wget		Required to download individual image files.
   img2pdf	Required to convert downloaded images into a PDF file.
+
+Notes:
+  - Only titles from www.weebcentral.com are supported (look for the series title
+    directly there if having issues with title not being found)
+  - Not all series from the website are supported, depending on the host url
 EOF
 }
 
@@ -85,7 +91,8 @@ fix_title() {
 	title="${title,,}"
 	title="${title//-/ }"
 	result=$(for word in $title; do echo -n "${word^}-"; done)
-	echo "${result%-}"
+	result="${result%-}"
+	sed -E 's:/(.):/\U\1:g' <<< "$result"
 }
 
 make_decimal() {
@@ -214,11 +221,13 @@ validate_numeric_args() {
 }
 
 resolve_dirs() {
+	local base_dir
+
 	[[ -n "$output_pdf" ]] || output_pdf="$title.pdf"
 	[[ "$output_pdf" == *.pdf ]] || output_pdf="$output_pdf.pdf"
 	[[ "$output_pdf" == /* ]] || output_pdf="$output_dir/$output_pdf"
 
-	local base_dir="$(dirname "$output_pdf")"
+	base_dir="$(dirname "$output_pdf")"
 	[[ -d "$base_dir" ]] || mkdir -p "$base_dir"
 
 	images="$(basename "$output_pdf" .pdf).images"
@@ -259,7 +268,7 @@ get_new_host() {
 
 find_initial_host() {
 	echo "Finding host..."
-	get_new_host "$(get_image_name "$from" 1)" || { echo "Error: No host was found. Try both JP and EN titles of the series and make sure the entered staring chapter exists for the series"; exit 1; }
+	get_new_host "$(get_image_name "$from" 1)" || { [[ "$ignore_if_fail" == true ]] && return 1; } || { echo "Error: No host was found. Try both JP and EN titles of the series and make sure the entered staring chapter exists for the series"; exit 1; }
 }
 
 download_image() {
@@ -303,7 +312,8 @@ download_images() {
 		done
 
 		[[ "$page" -gt 1 ]] && ((chapters_downloaded++))
-		[[ "$chapter" == "$to" ]] && update_progress "$chapter_pretty" "$page" "$chapters_downloaded" "$pages_downloaded"
+		[[ "$chapter" == "$to" ]] || [[ "$chapters_downloaded" == "$limit" ]] && update_progress "$chapter_pretty" "$page" "$chapters_downloaded" "$pages_downloaded"
+		[[ "$chapters_downloaded" == "$limit" ]] && break
 	done
 }
 
@@ -335,6 +345,7 @@ main() {
 	to=""
 	chapters=""
 	ignore_if_fail=false
+	limit=""
 
 	help_short="Please refer to manga-dl -h for help"
 	reset="                                                          "
@@ -353,10 +364,11 @@ main() {
 		--to)			set -- "$@" -t ;;
 		--chapters)		set -- "$@" -c ;;
 		--ignore-if-fail)	set -- "$@" -i ;;
+		--limit)		set -- "$@" -l ;;
 	        *)			set -- "$@" "$arg" ;;
 	    esac
 	done
-	while getopts "o:O:s:T:f:t:c:knih" opt; do
+	while getopts "o:O:s:T:f:t:c:l:knih" opt; do
 		case "$opt" in
 			o) output_pdf="$OPTARG" ;;
 			O) output_dir="$OPTARG" ;;
@@ -369,6 +381,7 @@ main() {
 			t) to="$OPTARG" ;;
 			c) chapters="$OPTARG" ;;
 			i) ignore_if_fail=true ;;
+			l) limit="$OPTARG" ;;
 			\?) echo -e "Error: Invalid option: -$OPTARG\n$help_short" >&2; exit 1 ;;
 		esac
 	done
@@ -383,12 +396,17 @@ main() {
 	from="$(make_decimal "$from")"
 	to="$(make_decimal "$to")"
 
+	[[ -z "$limit" ]] && limit="$to"
+
 	echo "Title: $title"
 	echo "From:  $(prettify_num "$from")"
 	echo -e "To:    $(prettify_num "$to")\n"
 
-	[[ "$keep_images" == true ]] && echo "Images dir: "$images_dir""
-	[[ "$no_pdf" == false ]] && echo "PDF file: "$output_pdf""
+	temp="Images"
+	[[ "$keep_images" == false ]] && temp="Temporary images"
+
+	echo "$temp dir: ""$images_dir"""
+	[[ "$no_pdf" == false ]] && echo "PDF file: ""$output_pdf"""
 	echo ""
 
 	find_initial_host
