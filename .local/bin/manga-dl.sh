@@ -8,7 +8,7 @@
 
 display_help() {
     cat <<EOF
-Usage: manga-dl.sh [OPTIONS] TITLE [FROM_CHAPTER] [TO_CHAPTER]
+Usage: manga-dl [OPTIONS] TITLE [FROM_CHAPTER] [TO_CHAPTER]
 
 Manga Downloader Script
 -----------------------
@@ -36,7 +36,7 @@ Options:
 			(or N if M is not specified)
 			Cannot be combined with --from, --to, or FROM/TO_CHAPTER arguments.
   -o, --output FILE	Custom PDF filename inside DIR. Default: TITLE.pdf
-  -O, --output-dir DIR	Directory for output. Default: ~/Downloads/Manga
+  -d, --output-dir DIR	Directory for output. Default: ~/Downloads/Manga
   -k, --keep		Keep downloaded images after creating PDF.
   -n, --no-pdf		Do not create a PDF; only download images.
   -s, --step NUMBER	Step size between chapters. Default: 0.5
@@ -47,29 +47,38 @@ Options:
 
 Examples:
   Download entire series "Oyasumi Punpun":
-    manga-dl.sh Oyasumi-Punpun
+    manga-dl Oyasumi-Punpun
 
   Download chapters 5 to 30:
-      manga-dl.sh "oyasumi punpun" 5 30
+    manga-dl "oyasumi punpun" 5 30
 
   Download chapter 6.5 only:
-      manga-dl.sh dorohedoro 6.5
+    manga-dl dorohedoro 6.5
 
-  Download chapters 1 to 10, keep images, custom PDF name:
-      manga-dl.sh --keep -o Oyasumi-Punpun_1-10.pdf "Oyasumi Punpun" 1 10
+  Download chapters 1 to 10, keep images, custom PDF path with name:
+    manga-dl --keep -o ~/Documents/Oyasumi-Punpun_1-10.pdf "Oyasumi Punpun" 1 10
 
-  Use custom output directory:
-      manga-dl.sh -O /tmp/manga Blame 1 5
+  Use custom output directory, pdf name, and keep downloaded images:
+    manga-dl --keep -d ~/Documents -o blame-1-to-5 Blame 1 5
+
+  Download first 5 even chapters, do not create PDF
+    manga-dl -n --title chainsaw-man --from 2 --step 2 --limit 5
+
+  Download all bonus chapters
+    manga-dl -i --title dorohedoro --chapters 0.5,168 --step 1
 
 Dependencies:
-  curl		Required to check if images exist on the host.
-  wget		Required to download individual image files.
-  img2pdf	Required to convert downloaded images into a PDF file.
+  curl		Check if images exist on the host.
+  wget		Download individual image files.
+  img2pdf	Convert downloaded images into a PDF file.
 
 Notes:
-  - Only titles from www.weebcentral.com are supported (look for the series title
-    directly there if having issues with title not being found)
-  - Not all series from the website are supported, depending on the host url
+  - Only titles hosted on www.weebcentral.com are supported (look at the host
+    used on the website directly if having issues with title not being found)
+  - Some titles have more variants, e.g.
+      One-Punch Man: Onepunch-Man, Onepunch-Man/Mag-Official
+      Berserk: Berserk (ch. 374+), Berserk/Part1 (prologue),
+	       Berserk/Part2 (ch. 1 - 373)
 EOF
 }
 
@@ -166,6 +175,7 @@ validate_and_resolve_from_chapter() {
 		[[ -z "$to" ]] && to=9999
 	elif [[ -n "$from_positional" ]]; then
 		from="$from_positional"
+		[[ -z "$to" ]] && to="$from"
 	elif [[ -z "$from" ]]; then
 		from=1
 	fi
@@ -368,10 +378,10 @@ main() {
 	        *)			set -- "$@" "$arg" ;;
 	    esac
 	done
-	while getopts "o:O:s:T:f:t:c:l:knih" opt; do
+	while getopts "o:d:s:T:f:t:c:l:knih" opt; do
 		case "$opt" in
 			o) output_pdf="$OPTARG" ;;
-			O) output_dir="$OPTARG" ;;
+			d) output_dir="$OPTARG" ;;
 			k) keep_images=true ;;
 			n) no_pdf=true ;;
 			s) step="$OPTARG" ;;
