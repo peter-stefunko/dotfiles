@@ -1,0 +1,15 @@
+# Take a look at the mako manpage with the command:
+#   man 5 mako
+# To view all configuration options.
+
+font=JetBrainsMono Nerd Font 10
+background-color=#1d2021
+border-color=#ebdbb2
+default-timeout=8000
+
+[urgency=normal]
+border-color=#ebdbb2
+
+[urgency=high]
+border-color=#b16286
+default-timeout=0
