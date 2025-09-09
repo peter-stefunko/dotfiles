@@ -46,11 +46,14 @@
     bindsym $mod+comma exec $term -e sh -c "bluetuith"
 
 # Brightness
-    bindsym XF86MonBrightnessUp exec brightnessctl set +5%
-    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym XF86MonBrightnessUp exec swayosd-client --brightness +5
+    bindsym XF86MonBrightnessDown exec swayosd-client --brightness -5
 
 # Calculator
     bindsym XF86Calculator exec speedcrunch
+
+# CapsLock notification
+    bindsym --release Caps_Lock exec swayosd-client --caps-lock
 
 # Connect/disconnect AirPods
     bindsym $mod+shift+b exec bluetoothctl connect $airpods
@@ -67,7 +70,7 @@
     bindsym $mod+period exec rofi -show window
 
 # Mic
-    bindsym XF86AudioMicMute exec amixer set Capture toggle
+    bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
 
 # NordVPN
     bindsym $mod+ctrl+c exec nordvpn connect
@@ -91,9 +94,9 @@
     bindsym shift+Print exec grimshot save active $sc
 
 # Volume
-    bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
-    bindsym XF86AudioLowerVolume exec amixer set Master 5%-
-    bindsym XF86AudioMute exec amixer set Master toggle
+    bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume 5
+    bindsym XF86AudioLowerVolume exec swayosd-client --output-volume -5
+    bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
 
 
 ### Assign workspaces
@@ -360,6 +363,7 @@ client.focused_inactive $border $border $text $border
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-clip-persist -c both
 exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
+exec swayosd-server
 
 # Sound
 exec amixer set Capture toggle
