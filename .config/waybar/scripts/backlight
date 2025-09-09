@@ -1,0 +1,4 @@
+#!/bin/bash
+
+brightness=$(brightnessctl | grep "Current brightness" | awk -F '(' '{print $2}' | awk -F ')' '{print $1}')
+echo "󰖨 $brightness"
