@@ -12,6 +12,8 @@ adwaita-dark
 adwaita-fonts
 adwaita-icon-theme
 adwaita-icon-theme-legacy
+adwaita-qt5-git
+adwaita-qt6-git
 alsa-capabilities
 alsa-card-profiles
 alsa-config-utils
@@ -83,6 +85,7 @@ capstone
 capt-src
 cblas
 cdparanoia
+cfitsio
 check
 chromium
 cifs-utils
@@ -128,6 +131,8 @@ djvulibre
 dmidecode
 dnsmasq
 dnssec-anchors
+docbook-xml
+docbook-xsl
 dosfstools
 dotnet-host
 dotnet-runtime
@@ -145,6 +150,7 @@ ed
 edk2-ovmf
 efibootmgr
 efivar
+electron37
 ell
 enchant
 exempi
@@ -204,9 +210,11 @@ ghc-libs
 ghostscript
 giflib
 git
+git-lfs
 glew
 glib-networking
 glib2
+glib2-docs
 glibc
 glibmm
 glibmm-2.68
@@ -219,6 +227,7 @@ gnome-desktop-4
 gnome-desktop-common
 gnome-disk-utility
 gnome-keyring
+gnome-themes-extra
 gnu-free-fonts
 gnulib-l10n
 gnupg
@@ -258,6 +267,7 @@ gst-plugins-good
 gstreamer
 gtest
 gtk-chtheme
+gtk-doc
 gtk-engine-murrine
 gtk-layer-shell
 gtk-update-icon-cache
@@ -267,6 +277,7 @@ gtk3
 gtk3-demos
 gtk4
 gtk4-demos
+gtk4-layer-shell
 gtkmm-4.0
 gtkmm3
 gtksourceview4
@@ -341,6 +352,7 @@ haskell-data-default-instances-dlist
 haskell-data-default-instances-old-locale
 haskell-data-fix
 haskell-dec
+haskell-diff
 haskell-digest
 haskell-distributive
 haskell-djot
@@ -351,9 +363,11 @@ haskell-easy-file
 haskell-emojis
 haskell-erf
 haskell-fast-logger
+haskell-fgl
 haskell-file-embed
 haskell-foldable1-classes-compat
 haskell-generically
+haskell-generics-sop
 haskell-glob
 haskell-gridtables
 haskell-haddock-library
@@ -742,6 +756,7 @@ libcdio-paranoia
 libcdr
 libcec
 libcerf
+libcgif
 libcloudproviders
 libcmis
 libcolord
@@ -963,6 +978,7 @@ libuv
 libva
 libvdpau
 libverto
+libvips
 libvirt
 libvirt-glib
 libvirt-python
@@ -1070,6 +1086,7 @@ m4
 magickcache-git
 maim
 make
+mako
 man-db
 man-pages
 mariadb-libs
@@ -1077,8 +1094,10 @@ mbedtls
 md4c
 mdadm
 media-player-info
+meld
 mercurial
 mesa
+meson
 minizip
 mitmproxy
 mkinitcpio
@@ -1131,6 +1150,7 @@ nss
 ntfs-3g
 numactl
 nvim-lazy
+nvm
 nwg-displays
 obs-studio
 ocl-icd
@@ -1139,6 +1159,7 @@ onetbb
 oniguruma
 openal
 openbsd-netcat
+opencomic
 opencore-amr
 opencv
 openexr
@@ -1341,6 +1362,7 @@ python-stem
 python-tinycss2
 python-tornado
 python-torrequest
+python-tqdm
 python-typing_extensions
 python-urllib3
 python-urwid
@@ -1402,7 +1424,7 @@ reflector
 rhash
 ripgrep
 rnnoise
-rofi-wayland
+rofi
 rstudio-desktop-bin
 rsync
 rtkit
@@ -1425,6 +1447,7 @@ serd
 shaderc
 shadow
 shared-mime-info
+shellcheck
 sherlock-git
 signal-desktop
 signon-kwallet-extension
@@ -1476,7 +1499,9 @@ sway
 sway-contrib
 swaybg
 swayidle
+swayimg
 swaylock-effects
+swayosd
 swayr
 swh-plugins
 sysfsutils
@@ -1563,6 +1588,7 @@ uthash
 util-linux
 util-linux-libs
 v4l-utils
+vala
 valgrind
 vamp-plugin-sdk
 vapoursynth
@@ -1666,6 +1692,7 @@ xcb-util-wm
 xcb-util-xrm
 xdg-dbus-proxy
 xdg-desktop-portal
+xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
 xdg-desktop-portal-wlr
 xdg-user-dirs
