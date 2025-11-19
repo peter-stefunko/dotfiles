@@ -13,11 +13,14 @@
 # AirPods MAC address
     set $airpods 20:78:CD:40:64:27
 
+# Browser
+    set $browser vivaldi-stable
+
 # Custom scripts
     set $scripts ~/.config/sway/scripts
     set $alttab $scripts/alttab
-    set $swaylock-inhibit $scripts/swaylock-inhibit
-    set $sc-text $scripts/ocr-screen
+    set $swaylock_inhibit $scripts/swaylock-inhibit
+    set $sc_text $scripts/ocr-screen
 
 # Launcher
     set $menu rofi -show drun
@@ -30,11 +33,21 @@
     set $sc_format $(date +%Y-%m-%d_%H-%M-%S)
     set $sc $scs/$sc_format.png
 
+# Status bar
+    set $status_bar waybar
+
 # Terminal
     set $term wezterm
 
 
 ### Custom keybinds
+# AirPods
+    # Connection
+    bindsym $mod+shift+b exec bluetoothctl connect $airpods
+    bindsym $mod+shift+d exec bluetoothctl disconnect $airpods
+    # Settings
+    bindsym $mod+p exec librepods
+
 # Alt-Tab
     bindsym $mod+Tab exec $alttab window next
     bindsym $mod+shift+Tab exec $alttab window prev
@@ -43,7 +56,7 @@
     bindsym Mod1+Tab exec swayr switch-to-urgent-or-lru-window
 
 # Bluetooth manager
-    bindsym $mod+comma exec $term -e sh -c "bluetuith"
+    bindsym $mod+o exec $term -e sh -c "bluetuith"
 
 # Brightness
     bindsym XF86MonBrightnessUp exec swayosd-client --brightness +5
@@ -55,12 +68,13 @@
 # CapsLock notification
     bindsym --release Caps_Lock exec swayosd-client --caps-lock
 
-# Connect/disconnect AirPods
-    bindsym $mod+shift+b exec bluetoothctl connect $airpods
-    bindsym $mod+shift+d exec bluetoothctl disconnect $airpods
-
 # Display manager
     bindsym XF86Display exec nwg-displays
+
+# Help - display keybinds
+bindsym $mod+F1 exec rofi -dmenu -i -p "Keybinds" \
+    -theme-str 'window {width: 35%; height: 80%;} textbox-prompt-colon {str: "→ ";}' \
+    < ~/.config/sway/keybinds.txt
 
 # Menus
     # Networks
@@ -86,12 +100,17 @@
     bindsym $mod+ctrl+l exec swaylock -f
 
 # Screenshot OCR
-    bindsym $mod+ctrl+Print exec $sc-text
+    bindsym $mod+ctrl+Print exec $sc_text
 
 # Screenshots
-    bindsym Print exec grim $sc
-    bindsym ctrl+Print exec grimshot save area $sc
-    bindsym shift+Print exec grimshot save active $sc
+    # All monitors
+    bindsym Print exec sh -c 'wl-copy --type image/png < $(grimshot save screen $sc)'
+    # Active monitor
+    bindsym $mod+Print exec sh -c 'wl-copy --type image/png < $(grimshot save output $sc)'
+    # Active window
+    bindsym shift+Print exec sh -c 'wl-copy --type image/png < $(grimshot save active $sc)'
+    # Area
+    bindsym ctrl+Print exec sh -c 'wl-copy --type image/png < $(grimshot save area $sc)'
 
 # Volume
     bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume 5
@@ -128,7 +147,7 @@ assign [class="discord"] workspace 6
 assign [class="Signal*"] workspace 6
 
 # 7:  
-assign [class="NoiseTorch"] workspace 7
+assign [title="NoiseTorch"] workspace 7
 
 # 8:  
 assign [class="1Password"] workspace 8
@@ -146,7 +165,7 @@ output * bg ~/.local/share/wallpapers/background.png fill
 
 ### Idle configuration
 exec swayidle -w \
-	timeout 480 $swaylock-inhibit \
+	timeout 480 $swaylock_inhibit \
 	timeout 600 'systemctl suspend-then-hibernate' \
 	before-sleep 'swaylock -f'
 
@@ -192,7 +211,7 @@ input "type:keyboard" {
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+shift+c reload
+    bindsym $mod+ctrl+r reload
 
     # Exit sway
     bindsym $mod+ctrl+e exec swaymsg exit
@@ -370,11 +389,12 @@ exec amixer set Capture toggle
 exec amixer set Master 0%
 
 # Windowed programs
+exec $browser
 exec code
+exec noisetorch
 exec spotify
-exec $term -e sh -c "fastfetch; exec bash"
-exec vivaldi-stable
-exec waybar
+exec $status_bar
+exec $term -e sh -c "sleep 1; fastfetch; exec bash"
 
 
 include /etc/sway/config.d/*

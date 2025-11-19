@@ -23,7 +23,6 @@
 	"custom/vpn",
         "network",
         "sway/language",
-        "custom/consumption",
         "custom/backlight",
         "battery",
         "custom/mouse_bat",

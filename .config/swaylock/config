@@ -4,7 +4,7 @@ ignore-empty-password
 ### Appearance
 # Other
 disable-caps-lock-text
-hide-keyboard-layout
+show-keyboard-layout
 
 # Background
 image=/home/peter/.local/share/wallpapers/lock-screen.png

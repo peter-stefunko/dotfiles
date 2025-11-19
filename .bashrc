@@ -84,3 +84,5 @@ fi
 if [ -f /home/peter/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- | grep i )" ]; then
 	source /home/peter/.config/synth-shell/better-history.sh
 fi
+
+# eval "$(starship init bash)"
