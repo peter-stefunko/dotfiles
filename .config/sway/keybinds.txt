@@ -1,0 +1,98 @@
+$mod = Super
+
+========================================
+ SYSTEM
+========================================
+$mod+Ctrl+l		→ Lock screen
+$mod+Ctrl+s		→ Suspend then hibernate
+$mod+Ctrl+e		→ Exit sway
+$mod+Ctrl+r		→ Reload config
+
+========================================
+ OPEN PROGRAMS
+========================================
+$mod+Return		→ Open terminal
+$mod+d			→ App launcher
+$mod+Comma		→ Bluetooth manager
+XF86Calculator		→ Calculator
+$mod+n			→ Network menu
+$mod+/			→ Rofi run
+$mod+Period		→ Rofi window menu
+
+========================================
+ BLUETOOTH / AIRPODS
+========================================
+$mod+Shift+b		→ Connect AirPods
+$mod+Shift+d		→ Disconnect AirPods
+
+========================================
+ VPN
+========================================
+$mod+Ctrl+c		→ NordVPN connect
+$mod+Ctrl+d		→ NordVPN disconnect
+
+========================================
+ SCREENSHOTS / OCR
+========================================
+Print			→ Screenshot all monitors
+$mod+Print		→ Screenshot active monitor
+Shift+Print		→ Screenshot active window
+Ctrl+Print		→ Screenshot area
+$mod+Ctrl+Print		→ Screenshot OCR
+
+========================================
+ MEDIA / HARDWARE KEYS
+========================================
+XF86MonBrightnessUp	→ Brightness +5
+XF86MonBrightnessDown	→ Brightness -5
+XF86AudioRaiseVolume	→ Volume +5
+XF86AudioLowerVolume	→ Volume -5
+XF86AudioMute		→ Toggle mute
+XF86AudioMicMute	→ Toggle mic mute
+$mod+KP_4		→ Previous track
+$mod+KP_5		→ Play / Pause
+$mod+KP_6		→ Next track
+
+========================================
+ WINDOW MANAGEMENT
+========================================
+$mod+Shift+q		→ Kill focused window
+$mod+h / j / k / l	→ Focus left / down / up / right
+$mod+Arrow Keys		→ Focus left / down / up / right
+$mod+Shift+h/j/k/l	→ Move window left / down / up / right
+$mod+Shift+Arrows	→ Move window left / down / up / right
+$mod+Tab		→ Next window
+$mod+Shift+Tab		→ Previous window
+$mod+Grave		→ Next workSpace
+$mod+Shift+Grave	→ Previous workSpace
+Alt+Tab			→ Urgent or last-used window
+$mod+Space		→ Toggle focus tiling ↔ floating
+$mod+Shift+Space	→ Toggle window tiling ↔ floating
+$mod+a			→ Focus parent container
+$mod+f			→ Toggle fullscreen
+
+========================================
+ WORKSPACES
+========================================
+$mod+[1–10]		→ Switch to workSpace 1–10
+$mod+Shift+[1–10]	→ Move focused window to workSpace 1–10
+
+========================================
+ LAYOUT & MODES
+========================================
+$mod+b			→ Split horizontally
+$mod+v			→ Split vertically
+$mod+s			→ Layout: stacking
+$mod+w			→ Layout: tabbed
+$mod+e			→ Toggle split layout
+$mod+r			→ Enter resize mode
+    In resize mode:
+      h / j / k / l	→ Resize (shrink/grow)
+      Arrow Keys	→ Resize (shrink/grow)
+      Return / Esc	→ Exit resize mode
+
+========================================
+ SCRATCHPAD
+========================================
+$mod+Shift+Minus	→ Send window to scratchpad
+$mod+Minus		→ Show scratchpad window (cycle)
