@@ -5,10 +5,15 @@
 font=JetBrainsMono Nerd Font 10
 background-color=#1d2021
 border-color=#ebdbb2
-default-timeout=4000
+default-timeout=5000
+
+[app-name="discord"]
+border-color=#458588
+default-timeout=0
 
 [urgency=normal]
-border-color=#ebdbb2
+# border-color=#ebdbb2
+# default-timeout=5000
 
 [urgency=high]
 border-color=#b16286

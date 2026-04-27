@@ -24,6 +24,7 @@
         "network",
         "sway/language",
         "custom/backlight",
+        "custom/consumption",
         "battery",
         "custom/mouse_bat",
         "custom/time_right",

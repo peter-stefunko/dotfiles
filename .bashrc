@@ -13,28 +13,28 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 alias clean="clear && fastfetch"
-alias imv="imv -d"
+#alias imv="imv -d"
 alias st="spicetify"
 
-alias bashrc="sudo nano $HOME/.bashrc"
-alias bash-profile="sudo nano $HOME/.bash_profile"
-alias profile="sudo nano $HOME/.profile"
-alias nanorc="sudo nano $HOME/.nanorc"
+alias bashrc="nano $HOME/.bashrc"
+alias bash-profile="nano $HOME/.bash_profile"
+alias profile="nano $HOME/.profile"
+alias nanorc="nano $HOME/.nanorc"
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
-alias sway-config="sudo nano $XDG_CONFIG_HOME/sway/config"
+alias sway-config="nano $XDG_CONFIG_HOME/sway/config"
 alias sway-reload="sway exec reload"
-alias swaylock-config="sudo nano $XDG_CONFIG_HOME/swaylock/config"
+alias swaylock-config="nano $XDG_CONFIG_HOME/swaylock/config"
 
-alias waybar-config="sudo nano $XDG_CONFIG_HOME/waybar/config"
-alias waybar-style="sudo nano $XDG_CONFIG_HOME/waybar/style.css"
+alias waybar-config="nano $XDG_CONFIG_HOME/waybar/config"
+alias waybar-style="nano $XDG_CONFIG_HOME/waybar/style.css"
 alias waybar-reload="pkill waybar && sway exec waybar"
 
-alias rofi-config="sudo nano $XDG_CONFIG_HOME/rofi/config.rasi"
-alias foot-config="sudo nano $XDG_CONFIG_HOME/foot/foot.ini"
-alias wez-config="sudo nano $XDG_CONFIG_HOME/wezterm/wezterm.lua"
+alias rofi-config="nano $XDG_CONFIG_HOME/rofi/config.rasi"
+alias foot-config="nano $XDG_CONFIG_HOME/foot/foot.ini"
+alias wez-config="nano $XDG_CONFIG_HOME/wezterm/wezterm.lua"
 
 # Functions
 yay-autoremove() {
@@ -57,10 +57,16 @@ dfh() {
   df -h | grep -m 1 "$dir"
 }
 
+clformat() {
+  wl-copy $(wl-paste)
+}
+
 # Default prompt
 PS1='[\u@\h \W]\$ '
 
 eval "$(dircolors -b ~/.dircolors)"
+
+source /usr/share/nvm/init-nvm.sh
 
 # Load custom prompt
 #if [ -f "$HOME/.config/custom-prompt.sh" ] && [[ $- == *i* ]]; then
@@ -86,3 +92,9 @@ if [ -f /home/peter/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- 
 fi
 
 # eval "$(starship init bash)"
+
+# The next line updates PATH for the Google Cloud SDK.
+#if [ -f '/home/peter/Downloads/gcloud/google-cloud-sdk/path.bash.inc' ]; then . '/home/peter/Downloads/gcloud/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+#if [ -f '/home/peter/Downloads/gcloud/google-cloud-sdk/completion.bash.inc' ]; then . '/home/peter/Downloads/gcloud/google-cloud-sdk/completion.bash.inc'; fi
