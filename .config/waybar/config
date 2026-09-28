@@ -186,5 +186,6 @@
 	"exec": "~/.config/waybar/scripts/resize-indicator",
 	"format": "{}",
 	"interval": 1,
+	"tooltip": false,
     },
 }
