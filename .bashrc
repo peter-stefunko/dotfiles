@@ -30,7 +30,7 @@ alias swaylock-config="nano $XDG_CONFIG_HOME/swaylock/config"
 
 alias waybar-config="nano $XDG_CONFIG_HOME/waybar/config"
 alias waybar-style="nano $XDG_CONFIG_HOME/waybar/style.css"
-alias waybar-reload="pkill waybar && sway exec waybar"
+alias waybar-reload="pkill -x waybar; swaymsg exec waybar"
 
 alias rofi-config="nano $XDG_CONFIG_HOME/rofi/config.rasi"
 alias foot-config="nano $XDG_CONFIG_HOME/foot/foot.ini"
@@ -38,7 +38,7 @@ alias wez-config="nano $XDG_CONFIG_HOME/wezterm/wezterm.lua"
 
 # Functions
 yay-autoremove() {
-  yay -Rn $(yay -Qdtq)
+  yay -Rns $(yay -Qdtq)
 }
 
 yayr() {
