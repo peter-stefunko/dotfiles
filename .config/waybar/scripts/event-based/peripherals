@@ -1,0 +1,79 @@
+#!/bin/bash
+# Privacy indicator for waybar: screen share, camera and microphone in use.
+# Event-driven: re-checks only when a PipeWire node/link appears or
+# disappears, or when the camera device is opened/closed (inotify).
+#
+# Camera events need inotify-tools (`sudo pacman -S inotify-tools`);
+# without it the camera is polled every 3 s as a fallback.
+
+source "${BASH_SOURCE%/*}/lib.sh"
+wb_init "$@"
+
+cam_dev=/dev/video0
+mic_match=Mic1      # report recordings from sources whose name contains this
+
+screen_icon=$'\U000f0379'
+camera_icon=$'  \U000f0100'
+mic_icon=$'  '
+
+events() {
+    # One line per PipeWire Node/Link added or removed. Client objects are
+    # ignored: our own pw-dump calls create those, which would loop forever.
+    stdbuf -oL pw-mon -N -o -a 2>/dev/null | awk '
+        /^(added|removed):/ { ev = $1; next }
+        ev && $1 == "id:" {
+            id = $2
+            if (ev == "removed:") {
+                if (id in tracked) { delete tracked[id]; print "pw"; fflush() }
+                ev = ""
+            }
+            next
+        }
+        ev && $1 == "type:" {
+            if ($2 ~ /Interface:(Node|Link)$/) { tracked[id] = 1; print "pw"; fflush() }
+            ev = ""
+        }' &
+    if command -v inotifywait >/dev/null; then
+        inotifywait -mq -e open,close "$cam_dev" 2>/dev/null &
+    else
+        while sleep 3; do echo poll; done &
+    fi
+    wait
+}
+
+# Prints "<screen> <mic>" as true/false.
+#   screen: a video source that is not a real device (portal screencast node)
+#   mic:    a Mic source linked to a recording stream, ignoring monitor
+#           streams such as pavucontrol's "Peak detect" level meters
+pw_state() {
+    pw-dump 2>/dev/null | jq -r --arg mic "$mic_match" '
+        map(select(.type == "PipeWire:Interface:Node")) as $nodes
+        | [ $nodes[] | select(.info.props["media.class"] == "Audio/Source"
+                and ((.info.props["node.name"] // "") | contains($mic))) | .id ] as $mics
+        | [ $nodes[] | select(.info.props["media.class"] == "Stream/Input/Audio"
+                and .info.props["stream.monitor"] != true) | .id ] as $recorders
+        | any(.[]; .type == "PipeWire:Interface:Link"
+                and (.info["output-node-id"] | IN($mics[]))
+                and (.info["input-node-id"] | IN($recorders[]))) as $mic_on
+        | any($nodes[]; .info.props["media.class"] == "Video/Source"
+                and .info.props["device.api"] == null) as $screen_on
+        | "\($screen_on) \($mic_on)"'
+}
+
+camera_in_use() {
+    [[ -n $(find /proc/[0-9]*/fd -lname "$cam_dev" -print -quit 2>/dev/null) ]]
+}
+
+render() {
+    local screen_on mic_on screen= camera= mic=
+    read -r screen_on mic_on < <(pw_state)
+    [[ $screen_on == true ]] && screen=$screen_icon
+    camera_in_use && camera=$camera_icon
+    [[ $mic_on == true ]] && mic=$mic_icon
+    wb_print "$screen$camera$mic"
+}
+
+exec {ev}< <(events)
+render
+while wb_wait_event "$ev"; do render; done
+exit 1

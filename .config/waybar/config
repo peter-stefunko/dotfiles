@@ -7,7 +7,7 @@
     
     "modules-left": [
 	"sway/workspaces",
-	"custom/resize-mode",
+	"sway/mode",
     ],
     
     "modules-center": [
@@ -23,8 +23,7 @@
 	"custom/vpn",
         "network",
         "sway/language",
-        "custom/backlight",
-        "custom/consumption",
+        "backlight",
         "battery",
         "custom/mouse_bat",
         "custom/time_right",
@@ -43,8 +42,8 @@
 	    "5": "󱔗",
 	    "6": " ",
 	    "7": " ",
-	    "8": " ",
-	    "9": " ",
+	    "8": "8",
+	    "9": "9",
 	    "10": "10",
 	},
 	"disable-click": true,
@@ -66,7 +65,10 @@
         "format-plugged": " {icon}  {capacity}% ",
         "format-warning": " {icon}  {capacity}% ",
         "format-icons": ["󰂎", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
-        "interval": 1,
+        // power draw (replaces custom/consumption), shown only while discharging
+        "format-discharging": " {power:.2f} W | {icon} {capacity}% ",
+        "format-discharging-warning": " {power:.2f} W | {icon}  {capacity}% ",
+        "interval": 3,
 	"tooltip": false,
     },
 
@@ -104,88 +106,84 @@
 
     "custom/sep": {
 	"format": " | ",
-	"interval": 0,
 	"tooltip": false,
     },
 
-    "custom/backlight": {
-	"exec": "~/.config/waybar/scripts/backlight",
-	"format": " {} |",
-	"interval": 1,
-	"tooltip": false,
-    },
+    // Event-driven modules: the scripts in scripts/event-based/ run
+    // continuously and print a line only when something changes.
+    // Never give them an "interval": any numeric interval (even 0, which
+    // waybar clamps to 1 ms) turns them back into polled scripts.
 
-    "custom/consumption": {
-        "exec": "~/.config/waybar/scripts/consumption",
-        "format": " {} |",
-        "interval": 3,
+    "backlight": {
+	"device": "intel_backlight",
+	"format": " 󰖨 {percent}% |",
 	"tooltip": false,
     },
 
     "custom/mouse_bat": {
-	"exec": "~/.config/waybar/scripts/mouse_bat",
+	"exec": "~/.config/waybar/scripts/event-based/mouse_bat",
 	"format": "{} | ",
-	"interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
     "custom/peripherals": {
-        "exec": "~/.config/waybar/scripts/peripherals",
+        "exec": "~/.config/waybar/scripts/event-based/peripherals",
         "format": "{} | ",
-        "interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
+    // static text, no exec, nothing to run
     "custom/space": {
-	"exec": "echo '.'",
-	"interval": 0,
+	"format": ".",
+	"tooltip": false,
     },
 
     "custom/spotify": {
-	"exec": "~/.config/waybar/scripts/spotify",
-	"interval": 1,
+	"exec": "~/.config/waybar/scripts/event-based/spotify",
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
     "custom/vpn": {
-	"exec": "~/.config/waybar/scripts/vpn",
+	"exec": "~/.config/waybar/scripts/event-based/vpn",
 	"format": "{} ",
-	"interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
     "custom/time_center": {
-	"exec": "~/.config/waybar/scripts/time_center",
+	"exec": "~/.config/waybar/scripts/event-based/clock time center",
 	"format": "󱑂 {} | ",
-	"interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
     "custom/date_center": {
-	"exec": "~/.config/waybar/scripts/date_center",
+	"exec": "~/.config/waybar/scripts/event-based/clock date center",
 	"format": " {}",
-	"interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
     "custom/time_right": {
-	"exec": "~/.config/waybar/scripts/time_right",
+	"exec": "~/.config/waybar/scripts/event-based/clock time right",
 	"format": "| 󱑂 {} | ",
-	"interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
     "custom/date_right": {
-	"exec": "~/.config/waybar/scripts/date_right",
+	"exec": "~/.config/waybar/scripts/event-based/clock date right",
 	"format": " {} ",
-	"interval": 1,
+	"restart-interval": 10,
 	"tooltip": false,
     },
 
-    "custom/resize-mode": {
-	"exec": "~/.config/waybar/scripts/resize-indicator",
+    // replaces custom/resize-mode: shown only while a sway mode is active
+    "sway/mode": {
 	"format": "{}",
-	"interval": 1,
 	"tooltip": false,
     },
 }

@@ -1,0 +1,30 @@
+#!/bin/bash
+# Logitech (hidpp) mouse battery for waybar, event-driven: re-reads sysfs only
+# on power_supply uevents (mouse connected/disconnected, capacity or status
+# change). Reads use bash builtins, so an update forks nothing.
+
+source "${BASH_SOURCE%/*}/lib.sh"
+wb_init "$@"
+
+mouse_icon=$'\U000f037d'
+charging_icon=$'\U000f140b'
+
+render() {
+    local d cap status out=
+    for d in /sys/class/power_supply/hidpp_battery*; do
+        read -r cap 2>/dev/null < "$d/capacity" || continue
+        read -r status 2>/dev/null < "$d/status"
+        if [[ $status == Charging ]]; then
+            out="$mouse_icon $charging_icon $cap%"
+        else
+            out="$mouse_icon $cap%"
+        fi
+        break
+    done
+    wb_print "$out"
+}
+
+exec {ev}< <(exec udevadm monitor --kernel --subsystem-match=power_supply)
+render
+while wb_wait_event "$ev"; do render; done
+exit 1

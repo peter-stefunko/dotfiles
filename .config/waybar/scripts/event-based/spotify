@@ -1,0 +1,61 @@
+#!/bin/bash
+# Spotify now-playing for waybar, event-driven: a single `playerctl --follow`
+# process prints a line whenever status, track, shuffle or loop changes.
+# Also maintains the flag file the clock modules use to pick their position.
+
+source "${BASH_SOURCE%/*}/lib.sh"
+
+player=spotify
+flag=${XDG_RUNTIME_DIR:-/tmp}/waybar-spotify-active
+title_max=25
+artist_max=20
+
+play_icon=$''
+pause_icon=$''
+shuffle_icon=$''
+repeat_track_icon=$''
+repeat_playlist_icon=$''
+
+wb_on_exit() { rm -f "$flag"; }
+wb_init "$@"
+
+shorten() {  # shorten VAR MAX
+    local -n v=$1
+    (( ${#v} > $2 )) && v="${v:0:$2-3}..."
+}
+
+sep=$'\x1f'   # non-whitespace separator, so empty fields survive `read`
+exec {ev}< <(exec playerctl -p "$player" --follow metadata \
+    --format "{{status}}$sep{{shuffle}}$sep{{loop}}$sep{{title}}$sep{{artist}}" 2>/dev/null)
+
+rm -f "$flag"
+wb_print ""
+
+while :; do
+    IFS=$sep read -r -t 30 -u "$ev" status shuffle loop title artist
+    rc=$?
+    if (( rc > 128 )); then wb_orphaned && exit 0; continue; fi
+    (( rc == 0 )) || exit 1   # playerctl died; waybar restarts us
+
+    case $status in
+        Playing) status_icon=$play_icon ;;
+        Paused)  status_icon=$pause_icon ;;
+        *) rm -f "$flag"; wb_print ""; continue ;;
+    esac
+    [[ -e $flag ]] || : > "$flag"
+
+    icons=()
+    [[ $shuffle == true ]] && icons+=("$shuffle_icon")
+    case $loop in
+        Track)    icons+=("$repeat_track_icon") ;;
+        Playlist) icons+=("$repeat_playlist_icon") ;;
+    esac
+    toggles=
+    if (( ${#icons[@]} == 2 )); then toggles=" | ${icons[0]}  ${icons[1]} "
+    elif (( ${#icons[@]} == 1 )); then toggles=" | ${icons[0]} "
+    fi
+
+    shorten title "$title_max"
+    shorten artist "$artist_max"
+    wb_print "$title - $artist $status_icon$toggles"
+done

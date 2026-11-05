@@ -1,0 +1,36 @@
+#!/bin/bash
+# Usage: clock {time|date} {center|right}
+#
+# Long-running clock for waybar. Forks nothing per tick: the time comes from
+# bash's builtin printf %(...)T and the sleep is a `read -t` (lib.sh).
+# The "center" copy shows while Spotify is inactive, the "right" copy while
+# Spotify occupies the center (the spotify script maintains the flag file).
+
+source "${BASH_SOURCE%/*}/lib.sh"
+wb_init "$@"
+
+case $1 in
+    time) fmt='%H:%M:%S' ;;
+    date) fmt='%a %d/%m/%Y' ;;
+    *) echo "usage: $0 {time|date} {center|right}" >&2; exit 2 ;;
+esac
+pos=$2
+flag=${XDG_RUNTIME_DIR:-/tmp}/waybar-spotify-active
+
+while :; do
+    if [[ -e $flag ]]; then spotify=right; else spotify=center; fi
+    if [[ $pos == "$spotify" ]]; then
+        printf -v out "%($fmt)T" -1
+    else
+        out=
+    fi
+    wb_print "$out"
+
+    # Sleep until just after the next full second.
+    us=${EPOCHREALTIME: -6}
+    us=$(( 1000000 - 10#$us + 1000 ))
+    printf -v s '%d.%06d' $(( us / 1000000 )) $(( us % 1000000 ))
+    wb_sleep "$s"
+
+    wb_orphaned && exit 0
+done

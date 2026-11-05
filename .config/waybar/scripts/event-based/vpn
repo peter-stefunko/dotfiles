@@ -1,0 +1,23 @@
+#!/bin/bash
+# NordVPN indicator for waybar, event-driven: re-checks only when a network
+# interface appears, disappears or changes (`ip monitor link`).
+# Connected == the NordLynx (or OpenVPN "nordtun") interface exists.
+
+source "${BASH_SOURCE%/*}/lib.sh"
+wb_init "$@"
+
+icon=$'\U000f0565'
+interfaces=(nordlynx nordtun)
+
+render() {
+    local i out=
+    for i in "${interfaces[@]}"; do
+        [[ -e /sys/class/net/$i ]] && { out=$icon; break; }
+    done
+    wb_print "$out"
+}
+
+exec {ev}< <(exec ip -o monitor link)
+render
+while wb_wait_event "$ev"; do render; done
+exit 1
