@@ -12,7 +12,8 @@
     set $right l
 
 # AirPods MAC address
-    set $airpods 20:78:CD:40:64:27
+    # set $airpods 20:78:CD:40:64:27
+    set $airpods EC:E9:D2:5D:AA:F5
 
 # Browser
     set $browser vivaldi-stable
@@ -131,7 +132,7 @@ assign [app_id="firefox-esr"] workspace 2
 assign [app_id="vivaldi-stable"] workspace 2
 
 # 3:  
-assign [app_id="code"] workspace 3
+assign [app_id="com.microsoft.VSCode"] workspace 3
 assign [class="jetbrains-*"] workspace 3
 assign [class="rstudio"] workspace 3
 
@@ -408,7 +409,7 @@ exec amixer set Master 0%
 # Windowed programs
 exec $browser
 exec code
-exec easyeffects
+# exec easyeffects
 exec noisetorch
 exec pavucontrol
 # exec spotify
