@@ -3,3 +3,5 @@
 	name = peter-stefunko
 [credential]
 	helper = store
+[alias]
+	st = status
